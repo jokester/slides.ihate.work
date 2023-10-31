@@ -15,9 +15,9 @@ export function MarkdownPage2() {
             <input type="file" name="file" />
           </label>
           <label>
-            <button type="submit" disabled>
+            <fluent-button type="submit" disabled>
               start
-            </button>
+            </fluent-button>
           </label>
         </form>
       </div>
@@ -61,10 +61,12 @@ Slide 3
     `.trim();
   return (
     <DefaultHtml header={header}>
-      <div class="reveal">
+      <div class="reveal" hidden>
         <div class="slides">
           <section data-markdown="">
-            <script type="text/template">{text}</script>
+            <script id="reveal-slide-source" type="text/template">
+              {text}
+            </script>
           </section>
         </div>
       </div>
@@ -75,9 +77,15 @@ Slide 3
             <input type="file" name="file" />
           </label>
           <label>
-            <button type="submit" disabled>
-              start
-            </button>
+            OR: Markdown Text
+            <textarea name="text" rows={10} cols={80}>
+              {text}
+            </textarea>
+          </label>
+          <label>
+            <fluent-button type="submit" disabled>
+              Loading...
+            </fluent-button>
           </label>
         </form>
       </div>

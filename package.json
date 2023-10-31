@@ -16,6 +16,7 @@
   "author": "Wang Guan <momocraft@gmail.com>",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "@fluentui/web-components": "^2.5.16",
     "@jokester/ts-commonutil": "^0.4.2",
     "@marp-team/marp-core": "^3.9.0",
     "hono": "^3.8.1",
