@@ -18,6 +18,7 @@
   "dependencies": {
     "@jokester/ts-commonutil": "^0.4.2",
     "hono": "^3.8.1",
+    "reveal.js": "^5.0.1",
     "tslib": "^2"
   },
   "engines": {

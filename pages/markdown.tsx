@@ -10,10 +10,13 @@ export function MarkdownPage() {
             <input type="file" name="file" />
           </label>
           <label>
-            <button type="submit">start</button>
+            <button type="submit" disabled>
+              start
+            </button>
           </label>
         </form>
       </div>
+      <script src="/static/markdown.js" defer></script>
     </DefaultHtml>
   );
 }
