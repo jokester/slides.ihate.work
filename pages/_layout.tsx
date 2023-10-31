@@ -1,10 +1,10 @@
-export function IndexPage() {
+export function DefaultHtml(props: { title?: string; children: any }) {
   return (
     <html lang="en">
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width" />
-        <title>Yet Another OpenAI Chat Bot</title>
+        <title>{props.title ?? 'TITLE'}</title>
         <link
           key="css-tailwind"
           rel="stylesheet"
@@ -13,10 +13,9 @@ export function IndexPage() {
           crossorigin="anonymous"
           referrerpolicy="no-referrer"
         />
-        <script src="/static/index.js" defer></script>
       </head>
 
-      <body>under construction...</body>
+      <body>{props.children}</body>
     </html>
   );
 }

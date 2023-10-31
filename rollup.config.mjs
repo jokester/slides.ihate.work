@@ -1,5 +1,6 @@
 // taken from https://github.com/glitch-txs/w3/blob/v1/packages/ui/react/walletconnect-legacy/rollup.config.js
 import terser from '@rollup/plugin-terser';
+// @ts-ignore
 import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
@@ -16,12 +17,11 @@ const globals = undefined
  * @type {import('rollup').RollupOptions}
  */
 export default {
-  input: ['./src/index.ts'],
+  input: ['./src/index.ts', './src/markdown.ts'],
   output: [
     {
-      file: './public/static/index.js',
+      dir: './public/static',
       format: 'cjs',
-      globals,
     },
   ],
   plugins: [
