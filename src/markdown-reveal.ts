@@ -19,13 +19,15 @@ async function tryReveal2() {
   const textArea = f.querySelector('textarea[name=text]') as HTMLTextAreaElement;
   const fileInput = f.querySelector('input[name=file]') as HTMLInputElement;
 
-  f.onsubmit = (ev) => {
+  f.onsubmit = async (ev) => {
     ev.preventDefault();
-    f.remove();
+    const file0 = fileInput.files?.[0];
+    const slideSource = file0 ? await file0.text() : textArea.value;
 
     wait(0.1e3).then(() => {
+      f.remove();
       slides.hidden = false;
-      tryReveal(textArea.value);
+      tryReveal(slideSource);
     });
   };
 }
@@ -36,7 +38,8 @@ async function tryReveal(text: string) {
   await Reveal.initialize({
     controls: true,
     progress: true,
-    history: true,
+    history: false,
+    slideNumber: true,
     hash: false,
     center: true,
     plugins: [RevealMarkdown, RevealHighlight, RevealSearch, RevealMath],
