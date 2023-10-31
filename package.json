@@ -17,6 +17,7 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "@jokester/ts-commonutil": "^0.4.2",
+    "@marp-team/marp-core": "^3.9.0",
     "hono": "^3.8.1",
     "reveal.js": "^5.0.1",
     "tslib": "^2"
@@ -26,11 +27,13 @@
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
+    "@rollup/plugin-json": "^6.0.1",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.5",
     "@types/debug": "^4.1.8",
     "@types/node": "^18",
+    "@types/reveal.js": "^4.4.5",
     "@typescript-eslint/eslint-plugin": "^5.60.0",
     "@typescript-eslint/parser": "^5.60.0",
     "eslint-config-prettier": "^8.8.0",

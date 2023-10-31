@@ -1,4 +1,6 @@
-export function DefaultHtml(props: { title?: string; children: any }) {
+import { HtmlEscapedString } from 'hono/dist/types/utils/html';
+
+export function DefaultHtml(props: { title?: string; header?: HtmlEscapedString; children: any }) {
   return (
     <html lang="en">
       <head>
@@ -13,6 +15,7 @@ export function DefaultHtml(props: { title?: string; children: any }) {
           crossorigin="anonymous"
           referrerpolicy="no-referrer"
         />
+        {props.header ?? null}
       </head>
 
       <body>{props.children}</body>

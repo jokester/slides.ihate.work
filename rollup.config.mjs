@@ -8,28 +8,29 @@ import typescript from '@rollup/plugin-typescript';
 // import postcss from 'rollup-plugin-postcss';
 // import postcssPresetEnv from 'postcss-preset-env';
 // import autoprefixer from 'autoprefixer';
+import json from '@rollup/plugin-json';
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
-const globals = undefined
+const globals = undefined;
 
 /**
  * @type {import('rollup').RollupOptions}
  */
 export default {
-  input: ['./src/index.ts', './src/markdown.ts'],
+  input: ['./src/index.ts', './src/markdown-reveal.ts'],
   output: [
     {
       dir: './public/static',
-      format: 'cjs',
     },
   ],
   plugins: [
+    json(),
     peerDepsExternal(),
-    nodeResolve({extensions, browser: true}),
+    nodeResolve({ extensions, browser: true }),
     commonjs(),
     typescript({
-      tsconfig: "tsconfig.browser.json",
+      tsconfig: 'tsconfig.browser.json',
     }),
     process.env.NODE_ENV === 'production' && terser(),
   ],
