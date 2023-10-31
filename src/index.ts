@@ -1,4 +1,4 @@
 /**
  * @file file for / page
  */
-location.href = '/markdown'
+location.href = '/markdown';
