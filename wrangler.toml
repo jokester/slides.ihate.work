@@ -1,0 +1,16 @@
+name = "yachat"
+compatibility_date = "2023-10-16"
+
+main = "hono-server.tsx"
+
+[site]
+bucket = "./public"
+
+[vars]
+# KEE = 'TODO' # for local dev
+
+[placement]
+mode = "smart"
+
+[env.prod]
+route = { pattern = "slides.ihate.work", custom_domain = true }

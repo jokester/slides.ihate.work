@@ -1,0 +1,25 @@
+{
+  "readme": "tsconfig for LSP. NOT for tsup builds which need to be configured for preact.",
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["es2020", "DOM"],
+    "module": "commonjs",
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
+    "moduleResolution": "node",
+    "target": "es2020",
+    "outDir": "./build",
+  },
+  "exclude": [
+    "public",
+    "node_modules",
+    "scripts",
+    "coverage",
+    "build",
+    "__test__",
+    "bin",
+    "jest.config.ts",
+    "tsup.config.ts"
+  ]
+}

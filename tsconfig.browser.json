@@ -1,0 +1,24 @@
+{
+  "readme": "tsconfig for LSP. NOT for rollup builds which need to be configured otherwise",
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "emitDecoratorMetadata": false,
+    "lib": ["es2020", "DOM"],
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "rootDir": "src",
+  },
+  "exclude": [
+    "public",
+    "node_modules",
+    "scripts",
+    "coverage",
+    "build",
+    "__test__",
+    "bin",
+    "jest.config.ts",
+    "tsup.config.ts"
+  ]
+}
