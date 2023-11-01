@@ -21,6 +21,7 @@
     "@marp-team/marp-core": "^3.9.0",
     "hono": "^3.8.1",
     "reveal.js": "^5.0.1",
+    "reveal.js-mermaid-plugin": "^2.0.0",
     "tslib": "^2"
   },
   "engines": {
