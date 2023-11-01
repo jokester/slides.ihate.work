@@ -42,10 +42,17 @@ const header = (
     />
     <link
       rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.1/dist/theme/black.css"
-      integrity="sha256-u7b1ew+/UCV5esol+6xydfpMhXWOxKlNzz3+H+UQ6H8="
+      href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.1/dist/theme/simple.css"
+      integrity="sha256-BYbhkIKkrDAzklCmlvqhvE11+kJhqINHgrGzQOAEdMg="
       crossorigin="anonymous"
     />
+
+    {/*<link*/}
+    {/*  rel="stylesheet"*/}
+    {/*  href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.1/dist/theme/black.css"*/}
+    {/*  integrity="sha256-u7b1ew+/UCV5esol+6xydfpMhXWOxKlNzz3+H+UQ6H8="*/}
+    {/*  crossorigin="anonymous"*/}
+    {/*/>*/}
   </Fragment>
 );
 export function MarkdownPage() {
