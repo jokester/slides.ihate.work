@@ -57,20 +57,37 @@ const header = (
 );
 export function MarkdownPage() {
   const text = `
-## Demo 1
+  
+## Section 1
+
 Slide 1
+
 ---
-## Demo 1
-Slide 2
+
+## Section 2
+Slide 2-1
+
+--
+
+## Section 2
+Slide 2-2
+
 ---
+
 ## Demo 1
 Slide 3
     `.trim();
+
+  const options = {
+    'data-markdown': '',
+    'data-separator': '^\n---\n$',
+    'data-separator-vertical': '^\n--\n$',
+  };
   return (
     <DefaultHtml header={header}>
       <div class="reveal" hidden>
         <div class="slides">
-          <section data-markdown="">
+          <section {...options}>
             <script id="reveal-slide-source" type="text/template">
               {text}
             </script>
