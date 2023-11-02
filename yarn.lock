@@ -3013,6 +3013,11 @@ reusify@^1.0.4:
   resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"
   integrity sha512-U9nH88a3fc/ekCF1l0/UP1IosiuIjyTh7hBvXVMHYgVcfGvt897Xguj2UOLDeI5BG2m7/uwyaLVT6fbtCwTyzw==
 
+reveal.js-mermaid-plugin@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/reveal.js-mermaid-plugin/-/reveal.js-mermaid-plugin-2.0.0.tgz#47744405650805434819db566f3ea662a7f99db3"
+  integrity sha512-PfuolEBIOqlQtlPv0dCm1QjHrV7xpX69Kel5xiRlsttfPn/LY5yVZWKe0qhSDL3wBYumCHgFkB0LScqwSAOYRg==
+
 reveal.js@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/reveal.js/-/reveal.js-5.0.1.tgz#c489425bbc42c2160b1198584113e9419b43a593"
