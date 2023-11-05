@@ -18,7 +18,10 @@ const globals = undefined;
  * @type {import('rollup').RollupOptions}
  */
 export default {
-  input: ['./src/index.ts', './src/markdown-reveal.ts'],
+  input: [
+    // './src/index.ts', './src/markdown-reveal.ts'
+    './src/csr.tsx'
+  ],
   output: [
     {
       dir: './public/static',
@@ -30,7 +33,9 @@ export default {
     nodeResolve({ extensions, browser: true }),
     commonjs(),
     typescript({
-      tsconfig: 'tsconfig.browser.json',
+      noEmitOnError: false,
+      outputToFilesystem: true,
+      tsconfig: 'tsconfig.json',
     }),
     process.env.NODE_ENV === 'production' && terser(),
   ],

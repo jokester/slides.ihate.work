@@ -1,4 +1,4 @@
-export function IndexPage() {
+export function IndexPage2(props: unknown) {
   return (
     <html lang="en">
       <head>
@@ -13,10 +13,14 @@ export function IndexPage() {
           crossorigin="anonymous"
           referrerpolicy="no-referrer"
         />
-        <script src="/static/index.js" defer></script>
+        <script src="/index.js" defer></script>
       </head>
 
       <body>under construction...</body>
     </html>
   );
+}
+
+export function IndexPage(props: unknown) {
+  return <div>TODO: IndexPage</div>;
 }
