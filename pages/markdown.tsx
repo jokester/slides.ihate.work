@@ -97,12 +97,6 @@ const header = (
     />
     {themes.simple}
     {code.docco}
-    {/*(IDK how to load this in bundler)*/}
-    <script
-      src="https://cdn.jsdelivr.net/npm/reveal.js-mermaid-plugin@2.0.0/plugin/mermaid/mermaid.js"
-      integrity="sha256-A9u8JpiMonZpMPHSm1jLJOWwtRfCOaqHKlQjjbZXwXQ="
-      crossorigin="anonymous"
-    />
   </Fragment>
 );
 export function MarkdownPage() {
