@@ -1,3 +1,5 @@
+import { useEffect } from 'preact/compat';
+
 export function IndexPage2(props: unknown) {
   return (
     <html lang="en">
@@ -22,5 +24,8 @@ export function IndexPage2(props: unknown) {
 }
 
 export function IndexPage(props: unknown) {
+  useEffect(() => {
+    console.log('hello');
+  }, []);
   return <div>TODO: IndexPage</div>;
 }
