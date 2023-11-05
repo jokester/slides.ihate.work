@@ -8,7 +8,7 @@ export function MarkdownPage() {
   return (
     <>
       <MarkdownForm onStart={setText} hidden={!!text} />
-      <MarkdownSlides text={text} />
+      {text && <MarkdownSlides text={text} />}
     </>
   );
 }

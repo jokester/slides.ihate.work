@@ -12,6 +12,7 @@ export function MarkdownSlides(props: PropsWithChildren<MarkdownSlideProps>) {
       if (!running) {
         return;
       }
+      console.debug('startReveal');
       m.startReveal();
     });
 
