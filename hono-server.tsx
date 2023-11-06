@@ -24,7 +24,7 @@ app.get(
         <>
           {revealThemes.reset}
           {revealThemes.base}
-          {revealThemes.white}
+          {revealThemes.simple}
           {revealCodeThemes.docco}
           {jsLinks.csr}
         </>

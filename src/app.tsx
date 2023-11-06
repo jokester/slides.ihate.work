@@ -1,3 +1,6 @@
+/**
+ * SPA entrypoint for CSR + SSR
+ */
 import Router from 'preact-router';
 import { IndexPage } from './pages';
 import { type VNode } from 'preact';

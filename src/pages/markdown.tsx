@@ -7,7 +7,7 @@ export function MarkdownPage() {
 
   return (
     <>
-      <MarkdownForm onStart={setText} hidden={!!text} />
+      {!text && <MarkdownForm onStart={setText} hidden={!!text} />}
       {text && <MarkdownSlides text={text} />}
     </>
   );

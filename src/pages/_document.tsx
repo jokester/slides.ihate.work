@@ -1,5 +1,14 @@
 import { VNode } from 'preact';
 
+const globalCss = `
+body {
+  min-height: 100%;
+}
+#root {
+  height: 100%;
+}
+`;
+
 export function Html(props: { title?: string; header?: VNode; children?: VNode }) {
   return (
     <html lang="en">
@@ -15,6 +24,8 @@ export function Html(props: { title?: string; header?: VNode; children?: VNode }
           crossOrigin="anonymous"
           referrerpolicy="no-referrer"
         />
+        <style> {globalCss} </style>
+
         {props.header ?? null}
       </head>
 

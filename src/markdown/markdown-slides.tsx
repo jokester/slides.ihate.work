@@ -29,7 +29,7 @@ export function MarkdownSlides(props: PropsWithChildren<MarkdownSlideProps>) {
     <div className="reveal">
       <div className="slides">
         <section data-markdown="" {...options}>
-          <script id="reveal-slide-source" type="text/template">
+          <script type="text/template">
             {props.text}
           </script>
         </section>
