@@ -16,7 +16,7 @@ app.get(
   etag({}),
   cache({
     cacheName: 'static',
-    cacheControl: 'private, max-age=1, must-revalidate',
+    cacheControl: 'public, max-age=300, must-revalidate',
   }),
   serveStatic({ root: /* relative to bucket in wrangler.toml */ '.' }),
 );
