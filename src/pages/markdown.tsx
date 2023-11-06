@@ -29,7 +29,7 @@ function PageFooter() {
         and many more open source packages.
       </p>
       <p>
-        If this site appeases you, please consider buying a beer for the great authors of the{' '}
+        If this site appeased you, please consider buying a beer for the great authors of the{' '}
         <a
           href="https://github.com/jokester/slides.ihate.work/blob/main/package.json"
           target="_blank"
