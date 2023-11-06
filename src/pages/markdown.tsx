@@ -15,7 +15,7 @@ function PageHeader() {
 
 function PageFooter() {
   return (
-    <footer className="px-4">
+    <footer className="px-4 text-center">
       <p>
         This site is powered by{' '}
         <a className="underline" href="https://github.com/honojs/hono">
