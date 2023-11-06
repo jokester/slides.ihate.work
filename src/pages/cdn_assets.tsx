@@ -10,10 +10,12 @@ export const cssLinks = {
     />
   ),
 };
+
 export const jsLinks = {
   csr: <script defer src="/static/csr.js" />,
-  markdown: <script defer src="/static/markdown.js" />,
-};
+  markdown: <script defer src="/static/markdown-reveal.js" />,
+} as const;
+
 export const revealThemes = {
   reset: (
     <link
