@@ -6,7 +6,7 @@ import RevealMath from 'reveal.js/plugin/math/math';
 // @ts-ignore
 import RevealMermaid from 'reveal.js-mermaid-plugin/plugin/mermaid/mermaid';
 
-export async function startReveal() {
+(window as any).__startReveal = async function startReveal() {
   // mermaid plugin expects this
   window.Reveal ??= Reveal;
   await Reveal.initialize({
@@ -18,4 +18,4 @@ export async function startReveal() {
     center: true,
     plugins: [RevealMarkdown, RevealHighlight, RevealSearch, RevealMath.MathJax3, RevealMermaid],
   });
-}
+};

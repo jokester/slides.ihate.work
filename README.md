@@ -12,7 +12,7 @@ yarn dev
 ## Preview before deploying to CF Worker
 
 ```
-yarn wrangler publish --dry-run --outdir=./worker-preview --minify=true
+yarn wrangler deploy --dry-run --outdir=./worker-preview --minify=true
 ```
 
 ## Run in Cloudflare Worker
@@ -24,7 +24,3 @@ yarn build
 yarn wrangler deploy --env=prod --minify=true
 ```
 
-## Built with
-
-- [reveal.js]() [
-- 
