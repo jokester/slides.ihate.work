@@ -26,7 +26,7 @@ export default {
   output: [
     {
       dir: './public/static',
-      format: 'iife',
+      format: 'esm',
     },
   ],
   plugins: [
