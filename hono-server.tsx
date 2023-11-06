@@ -5,6 +5,7 @@ import { serveStatic } from 'hono/cloudflare-workers';
 import { ssrStatic } from './src/ssr';
 import { Html } from './src/pages/_document';
 import { jsLinks, revealCodeThemes, revealThemes } from './src/pages/cdn_assets';
+import { App } from './src/app';
 import { MarkdownPage } from './src/pages/markdown';
 
 const app = new Hono<{ Bindings: Bindings }>({});

@@ -19,6 +19,7 @@
     "@fluentui/web-components": "^2.5.16",
     "@jokester/ts-commonutil": "^0.4.2",
     "@marp-team/marp-core": "^3.9.0",
+    "clsx": "^2.0.0",
     "hono": "^3.8.1",
     "preact": "^10.18.2",
     "preact-helmet": "^4.0.0-alpha-3",

@@ -1,8 +1,9 @@
+import clsx from 'clsx';
 import { PropsWithChildren, useEffect, useRef, useState } from 'preact/compat';
 
-export interface MarkdownFormProps {
+interface MarkdownFormProps {
   onStart(text: string): void;
-  hidden: boolean;
+  className?: string;
 }
 
 const defaultSlideText = `
@@ -36,8 +37,9 @@ async function readFormValue(f: HTMLFormElement): Promise<string> {
 
   return slideSource;
 }
+
 export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   useEffect(() => {
     setLoaded(true);
   }, []);
@@ -52,19 +54,22 @@ export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
   };
 
   return (
-    <div hidden={props.hidden}>
+    <div className={clsx('w-full', props.className)}>
       <form ref={formRef}>
-        <label>
-          File
-          <input type="file" name="file" />
-        </label>
-        <label>
-          OR: Markdown Text
-          <textarea name="text" rows={10} cols={80} value={defaultSlideText} />
-        </label>
-        <label>
-          <fluent-button type="button" disabled={!loaded} onClick={onStart}>
-            {loaded ? 'START' : 'Loading...'}
+        <div className="sm:grid grid-cols-2 gap-1">
+          <label className="flex sm:px-4 flex-col justify-center text-lg">
+            1️⃣ Select a Markdown file:
+            <input className="" type="file" name="file" />
+          </label>
+          <label>
+            <span className="text-lg">2️⃣ Or, input some Markdown text:</span>
+            <textarea className="w-full border p-1" name="text" rows={20} cols={80} value={defaultSlideText} />
+          </label>
+        </div>
+        <br />
+        <label className="flex w-full justify-center items-center">
+          <fluent-button className="w-64 h-16 text-lg" type="button" disabled={!loaded} onClick={onStart}>
+            and 3️⃣ START
           </fluent-button>
         </label>
       </form>
