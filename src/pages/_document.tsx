@@ -1,22 +1,37 @@
-export function IndexPage() {
+import { VNode } from 'preact';
+
+const globalCss = `
+body {
+  min-height: 100%;
+}
+#root {
+  height: 100%;
+}
+`;
+
+export function Html(props: { title?: string; header?: VNode; children?: VNode }) {
   return (
     <html lang="en">
       <head>
-        <meta charset="utf-8" />
+        <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width" />
-        <title>Yet Another OpenAI Chat Bot</title>
+        <title>{props.title ?? 'TITLE'}</title>
         <link
           key="css-tailwind"
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
           integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw=="
-          crossorigin="anonymous"
+          crossOrigin="anonymous"
           referrerpolicy="no-referrer"
         />
-        <script src="/static/index.js" defer></script>
+        <style> {globalCss} </style>
+
+        {props.header ?? null}
       </head>
 
-      <body>under construction...</body>
+      <body>
+        <div id="root">{props.children}</div>
+      </body>
     </html>
   );
 }
