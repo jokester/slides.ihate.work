@@ -59,7 +59,7 @@ export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
         <div className="sm:grid grid-cols-2 gap-1">
           <label className="flex sm:px-4 flex-col justify-center text-lg">
             1️⃣ Select a Markdown file:
-            <input className="" type="file" name="file" />
+            <input className="" type="file" name="file" accept=".md,.markdown,mime/markdown" />
           </label>
           <label>
             <span className="text-lg">2️⃣ Or, input some Markdown text:</span>
