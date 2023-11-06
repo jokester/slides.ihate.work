@@ -12,7 +12,7 @@ app.use('/*', logger());
 app.get('/static/*', serveStatic({ root: /* relative to bucket in wrangler.toml */ '.' }));
 
 app.get('/', async (c, next) => {
-  return c.redirect('/markdown', 301);
+  return c.redirect('/markdown', 302);
 });
 
 app.get(
