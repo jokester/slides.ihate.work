@@ -19,8 +19,9 @@ const globals = undefined;
  */
 export default {
   input: [
-    // './src/index.ts', './src/markdown-reveal.ts'
-    './src/csr.tsx'
+    // './src/index.ts',
+    './src/markdown/markdown-reveal.ts',
+    './src/csr.tsx',
   ],
   output: [
     {

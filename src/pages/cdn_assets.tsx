@@ -12,6 +12,7 @@ export const cssLinks = {
 };
 export const jsLinks = {
   csr: <script defer src="/static/csr.js" />,
+  markdown: <script defer src="/static/markdown.js" />,
 };
 export const revealThemes = {
   reset: (

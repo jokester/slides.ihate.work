@@ -27,6 +27,7 @@ app.get(
           {revealThemes.base}
           {revealThemes.simple}
           {revealCodeThemes.docco}
+          {jsLinks.markdown}
           {jsLinks.csr}
         </>
       }
