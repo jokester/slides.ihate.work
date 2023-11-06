@@ -7,6 +7,8 @@ import RevealMath from 'reveal.js/plugin/math/math';
 import RevealMermaid from 'reveal.js-mermaid-plugin/plugin/mermaid/mermaid';
 
 export async function startReveal() {
+  // mermaid plugin expects this
+  window.Reveal ??= Reveal;
   await Reveal.initialize({
     controls: true,
     progress: true,
@@ -14,6 +16,6 @@ export async function startReveal() {
     slideNumber: true,
     hash: true,
     center: true,
-    plugins: [RevealMarkdown, RevealHighlight, RevealSearch, RevealMath, RevealMermaid],
+    plugins: [RevealMarkdown, RevealHighlight, RevealSearch, RevealMath.MathJax3, RevealMermaid],
   });
 }
