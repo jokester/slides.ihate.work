@@ -1,25 +1,35 @@
 {
-  "readme": "tsconfig for LSP. NOT for tsup builds which need to be configured for preact.",
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "noEmit": true,
-    "lib": ["es2020", "DOM"],
+    "isolatedModules": true,
+    "jsx": "preserve",
     "module": "esnext",
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact",
     "moduleResolution": "node",
-    "target": "es2020",
+    "noEmit": true,
+    "target": "esnext",
+    "skipLibCheck": true,
+    "typeRoots": [
+      "typings",
+      "node_modules/@types"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "incremental": true
   },
   "exclude": [
-    "public",
     "node_modules",
     "scripts",
     "coverage",
-    "pages",
     "build",
     "__test__",
     "bin",
-    "jest.config.ts",
-    "tsup.config.ts"
+    "jest.config.js"
+  ],
+  "include": [
+    "pages",
+    "src"
   ]
 }

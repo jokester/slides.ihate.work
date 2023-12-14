@@ -1,4 +1,4 @@
-import { Context, MiddlewareHandler } from 'hono';
+  mport { Context, MiddlewareHandler } from 'hono';
 import { VNode, Component, FunctionComponent, createElement } from 'preact';
 import { renderToString } from 'preact-render-to-string';
 import { StatusCode } from 'hono/dist/types/utils/http-status';
