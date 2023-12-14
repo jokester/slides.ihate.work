@@ -2,9 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
+html,
+body {
   min-height: 100%;
 }
-body {
+
+body.reveal-viewport > #__next {
   height: 100%;
 }
