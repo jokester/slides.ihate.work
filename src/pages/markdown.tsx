@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { MarkdownForm } from '../markdown/markdown-form';
 import { MarkdownSlides } from '../markdown/markdown-slides';
+import Head from 'next/head';
+import { revealCodeThemes, revealThemes } from '../components/cdn_assets';
 
 function PageHeader() {
   return (
@@ -82,11 +84,11 @@ function MarkdownHelp() {
               href: 'https://github.com/zjffun/reveal.js-mermaid-plugin',
             },
           ].map((v, i) => (
-            <>
+            <Fragment key={i}>
               <a className="underline ml-1" href={v.href}>
                 {v.title}
               </a>
-            </>
+            </Fragment>
           ))}
           . Please refer to these links for help.
         </li>

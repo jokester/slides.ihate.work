@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { Button } from '@mui/material';
-import { PropsWithChildren, useRef } from 'react';
+import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 
 interface MarkdownFormProps {
   onStart(text: string): void;
@@ -75,7 +75,7 @@ export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
           </label>
           <label>
             <span className="text-lg">2️⃣ Or, input some Markdown text:</span>
-            <textarea className="w-full border p-1" name="text" rows={20} cols={80} value={defaultSlideText} />
+            <textarea className="w-full border p-1" name="text" rows={20} cols={80} defaultValue={defaultSlideText} />
           </label>
         </div>
         <br />
@@ -87,11 +87,4 @@ export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
       </form>
     </div>
   );
-}
-function useState(arg0: boolean): [any, any] {
-  throw new Error('Function not implemented.');
-}
-
-function useEffect(arg0: () => void, arg1: never[]) {
-  throw new Error('Function not implemented.');
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import Document, { Html, Main, NextScript, Head } from 'next/document';
+import { revealCodeThemes, revealThemes } from '../src/components/cdn_assets';
 
 const defaultStyleSheets = [
   <link
@@ -13,7 +14,11 @@ const defaultStyleSheets = [
 export default function CustomDocument(): React.ReactElement {
   return (
     <Html>
-      <Head>{defaultStyleSheets} </Head>
+      <Head>
+        {defaultStyleSheets}
+        {revealThemes.simple}
+        {revealCodeThemes.docco}
+      </Head>
       <body>
         <Main />
         <NextScript />

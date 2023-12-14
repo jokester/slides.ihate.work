@@ -11,11 +11,6 @@ export const cssLinks = {
   ),
 };
 
-export const jsLinks = {
-  csr: <script type="module" defer src="/static/csr.js" />,
-  markdown: <script type="module" src="/static/markdown-reveal.js" />,
-} as const;
-
 export const revealThemes = {
   reset: (
     <link
