@@ -1,5 +1,5 @@
-import { PropsWithChildren, useEffect } from 'preact/compat';
 import { wait } from '@jokester/ts-commonutil/lib/concurrency/timing';
+import { PropsWithChildren, useEffect } from 'react';
 
 export interface MarkdownSlideProps {
   text: string;

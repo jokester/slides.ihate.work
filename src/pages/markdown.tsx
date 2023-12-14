@@ -1,4 +1,4 @@
-import { useState } from 'preact/compat';
+import { useState } from 'react';
 import { MarkdownForm } from '../markdown/markdown-form';
 import { MarkdownSlides } from '../markdown/markdown-slides';
 
@@ -8,7 +8,7 @@ function PageHeader() {
       <h1 className="text-xl my-2 text-center">slides.ihate.work</h1>
       <h2 className="text-lg my-1 text-center">A site to present Markdown slides</h2>
       <hr className="my-4" />
-      <p class="text-lg">Starting a presentation is as simple like</p>
+      <p className="text-lg">Starting a presentation is as simple like</p>
     </>
   );
 }
@@ -34,6 +34,7 @@ function PageFooter() {
           href="https://github.com/jokester/slides.ihate.work/blob/main/package.json"
           target="_blank"
           className="underline"
+          rel="noreferrer"
         >
           dependency packages
         </a>
@@ -82,9 +83,12 @@ function MarkdownHelp() {
             },
           ].map((v, i) => (
             <>
-              <a className="underline ml-1" href={v.href}>{v.title}</a>
+              <a className="underline ml-1" href={v.href}>
+                {v.title}
+              </a>
             </>
-          ))}. Please refer to these links for help.
+          ))}
+          . Please refer to these links for help.
         </li>
       </ul>
     </div>

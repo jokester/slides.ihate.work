@@ -1,5 +1,6 @@
 import clsx from 'clsx';
-import { PropsWithChildren, useEffect, useRef, useState } from 'preact/compat';
+import { Button } from '@mui/material';
+import { PropsWithChildren, useRef } from 'react';
 
 interface MarkdownFormProps {
   onStart(text: string): void;
@@ -79,11 +80,18 @@ export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
         </div>
         <br />
         <label className="flex w-full justify-center items-center">
-          <fluent-button className="w-64 h-16 text-lg" type="button" disabled={!loaded} onClick={onStart}>
+          <Button className="" type="button" onClick={onStart} disabled={!loaded}>
             and 3️⃣ START
-          </fluent-button>
+          </Button>
         </label>
       </form>
     </div>
   );
+}
+function useState(arg0: boolean): [any, any] {
+  throw new Error('Function not implemented.');
+}
+
+function useEffect(arg0: () => void, arg1: never[]) {
+  throw new Error('Function not implemented.');
 }
