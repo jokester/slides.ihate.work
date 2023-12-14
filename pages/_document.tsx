@@ -16,6 +16,8 @@ export default function CustomDocument(): React.ReactElement {
     <Html>
       <Head>
         {defaultStyleSheets}
+        {revealThemes.reset}
+        {revealThemes.base}
         {revealThemes.simple}
         {revealCodeThemes.docco}
       </Head>
