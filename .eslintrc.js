@@ -4,6 +4,7 @@ module.exports = {
   extends: [
     './node_modules/gts/',
     'plugin:react/recommended',
+    'plugin:@next/next/recommended',
     // "eslint:recommended", // not enabling: it reports many TS idioms as error
     'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',

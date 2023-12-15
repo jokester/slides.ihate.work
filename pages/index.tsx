@@ -8,7 +8,7 @@ const IndexPage: NextPage = (props) => {
     if (router.isReady) {
       router.replace('/markdown');
     }
-  }, [router.isReady]);
+  }, [router, router.isReady]);
 
   return <div>redirecting you...</div>;
 };

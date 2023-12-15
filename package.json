@@ -25,6 +25,7 @@
     "@jokester/ts-commonutil": "^0.4.2",
     "@mui/icons-material": "^5.15.0",
     "@mui/material": "^5.15.0",
+    "@next/eslint-plugin-next": "^14.0.4",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",
     "debug": "^4.3.4",
