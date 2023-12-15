@@ -19,15 +19,10 @@ function PageFooter() {
   return (
     <footer className="px-4 text-center">
       <p>
-        This site is powered by{' '}
-        <a className="underline" href="https://github.com/honojs/hono">
-          🔥Hono
-        </a>
-        {', '}
-        <a className="underline" href="https://revealjs.com/">
+        This site is powered by
+        <a className="underline mx-1" href="https://revealjs.com/">
           reveal.js
         </a>
-        {', '}
         and many more open source packages.
       </p>
       <p>
