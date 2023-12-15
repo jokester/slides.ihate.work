@@ -3,6 +3,7 @@ import { MarkdownForm } from '../markdown/markdown-form';
 import { MarkdownSlides } from '../markdown/markdown-slides';
 import Head from 'next/head';
 import { revealCodeThemes, revealThemes } from '../components/cdn_assets';
+import { DefaultMeta } from '../components/meta/default-meta';
 
 function PageHeader() {
   return (
@@ -97,18 +98,22 @@ export function MarkdownPage() {
 
   if (!text) {
     return (
-      <div className="container mx-auto px-2 py-4 flex flex-col min-h-screen">
-        <PageHeader />
-        <MarkdownForm onStart={setText} />
-        <MarkdownHelp />
-        <div className="flex-grow flex-shrink-0" />
-        <PageFooter />
-      </div>
+      <>
+        <DefaultMeta title="slides.ihate.work" />
+        <div className="container mx-auto px-2 py-4 flex flex-col min-h-screen">
+          <PageHeader />
+          <MarkdownForm onStart={setText} />
+          <MarkdownHelp />
+          <div className="flex-grow flex-shrink-0" />
+          <PageFooter />
+        </div>
+      </>
     );
   }
 
   return (
     <>
+      <DefaultMeta title="slides.ihate.work" />
       <MarkdownSlides text={text} />
     </>
   );

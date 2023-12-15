@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { Button } from '@mui/material';
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
 
 interface MarkdownFormProps {
   onStart(text: string): void;
@@ -52,8 +53,11 @@ async function readFormValue(f: HTMLFormElement): Promise<string> {
 
 export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
   const [loaded, setLoaded] = useState(true);
-  useEffect(() => {
-    setLoaded(true);
+  useAsyncEffect(async (running) => {
+    await import('./markdown-reveal');
+    if (running.current) {
+      setLoaded(true);
+    }
   }, []);
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -80,7 +84,7 @@ export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
         </div>
         <br />
         <label className="flex w-full justify-center items-center">
-          <Button className="" type="button" onClick={onStart} disabled={!loaded}>
+          <Button variant="outlined" className="" type="button" onClick={onStart} disabled={!loaded}>
             and 3️⃣ START
           </Button>
         </label>
