@@ -1,19 +1,17 @@
-!.gitkeep
 /node_modules
+/out
 /build
 /*.tgz
-.DS_Store
 .idea
 *.map
 /coverage
-*.tsbuildinfo
-/public/static
-/.rollup*
+/.next
 /.env
-!/.env.sample
+node_modules
 
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-worker-preview
-.wrangler
+
+.DS_store
+tsconfig.tsbuildinfo

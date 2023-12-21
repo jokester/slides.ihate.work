@@ -1,5 +1,7 @@
 import clsx from 'clsx';
-import { PropsWithChildren, useEffect, useRef, useState } from 'preact/compat';
+import { Button } from '@mui/material';
+import { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
 
 interface MarkdownFormProps {
   onStart(text: string): void;
@@ -51,8 +53,11 @@ async function readFormValue(f: HTMLFormElement): Promise<string> {
 
 export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
   const [loaded, setLoaded] = useState(true);
-  useEffect(() => {
-    setLoaded(true);
+  useAsyncEffect(async (running) => {
+    await import('./markdown-reveal');
+    if (running.current) {
+      setLoaded(true);
+    }
   }, []);
 
   const formRef = useRef<HTMLFormElement>(null);
@@ -74,14 +79,14 @@ export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
           </label>
           <label>
             <span className="text-lg">2️⃣ Or, input some Markdown text:</span>
-            <textarea className="w-full border p-1" name="text" rows={20} cols={80} value={defaultSlideText} />
+            <textarea className="w-full border p-1" name="text" rows={20} cols={80} defaultValue={defaultSlideText} />
           </label>
         </div>
         <br />
         <label className="flex w-full justify-center items-center">
-          <fluent-button className="w-64 h-16 text-lg" type="button" disabled={!loaded} onClick={onStart}>
+          <Button variant="outlined" className="" type="button" onClick={onStart} disabled={!loaded}>
             and 3️⃣ START
-          </fluent-button>
+          </Button>
         </label>
       </form>
     </div>

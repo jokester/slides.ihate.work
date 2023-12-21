@@ -1,24 +1,20 @@
-import { PropsWithChildren, useEffect } from 'preact/compat';
 import { wait } from '@jokester/ts-commonutil/lib/concurrency/timing';
+import { PropsWithChildren, useEffect } from 'react';
+import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
 
 export interface MarkdownSlideProps {
   text: string;
 }
 
 export function MarkdownSlides(props: PropsWithChildren<MarkdownSlideProps>) {
-  useEffect(() => {
-    let running = true;
+  useAsyncEffect(async (running, released) => {
+    const { startReveal } = await import('./markdown-reveal');
 
-    wait(0.1e3).then(() => {
-      if (!running) {
-        return;
-      }
-      (window as any).__startReveal();
-    });
-
-    return () => {
-      running = false;
-    };
+    await wait(0.1e3);
+    if (!running.current) {
+      return;
+    }
+    await startReveal();
   }, []);
   const options = {
     'data-separator': '^\n---\n$',

@@ -1,6 +1,9 @@
-import { useState } from 'preact/compat';
+import { Fragment, useState } from 'react';
 import { MarkdownForm } from '../markdown/markdown-form';
 import { MarkdownSlides } from '../markdown/markdown-slides';
+import Head from 'next/head';
+import { revealCodeThemes, revealThemes } from '../components/cdn_assets';
+import { DefaultMeta } from '../components/meta/default-meta';
 
 function PageHeader() {
   return (
@@ -8,7 +11,7 @@ function PageHeader() {
       <h1 className="text-xl my-2 text-center">slides.ihate.work</h1>
       <h2 className="text-lg my-1 text-center">A site to present Markdown slides</h2>
       <hr className="my-4" />
-      <p class="text-lg">Starting a presentation is as simple like</p>
+      <p className="text-lg">Starting a presentation is as simple like</p>
     </>
   );
 }
@@ -17,15 +20,10 @@ function PageFooter() {
   return (
     <footer className="px-4 text-center">
       <p>
-        This site is powered by{' '}
-        <a className="underline" href="https://github.com/honojs/hono">
-          🔥Hono
-        </a>
-        {', '}
-        <a className="underline" href="https://revealjs.com/">
+        This site is powered by
+        <a className="underline mx-1" href="https://revealjs.com/">
           reveal.js
         </a>
-        {', '}
         and many more open source packages.
       </p>
       <p>
@@ -34,6 +32,7 @@ function PageFooter() {
           href="https://github.com/jokester/slides.ihate.work/blob/main/package.json"
           target="_blank"
           className="underline"
+          rel="noreferrer"
         >
           dependency packages
         </a>
@@ -81,10 +80,13 @@ function MarkdownHelp() {
               href: 'https://github.com/zjffun/reveal.js-mermaid-plugin',
             },
           ].map((v, i) => (
-            <>
-              <a className="underline ml-1" href={v.href}>{v.title}</a>
-            </>
-          ))}. Please refer to these links for help.
+            <Fragment key={i}>
+              <a className="underline ml-1" href={v.href}>
+                {v.title}
+              </a>
+            </Fragment>
+          ))}
+          . Please refer to these links for help.
         </li>
       </ul>
     </div>
@@ -96,18 +98,22 @@ export function MarkdownPage() {
 
   if (!text) {
     return (
-      <div className="container mx-auto px-2 py-4 flex flex-col min-h-screen">
-        <PageHeader />
-        <MarkdownForm onStart={setText} />
-        <MarkdownHelp />
-        <div className="flex-grow flex-shrink-0" />
-        <PageFooter />
-      </div>
+      <>
+        <DefaultMeta title="slides.ihate.work" />
+        <div className="container mx-auto px-2 py-4 flex flex-col min-h-screen">
+          <PageHeader />
+          <MarkdownForm onStart={setText} />
+          <MarkdownHelp />
+          <div className="flex-grow flex-shrink-0" />
+          <PageFooter />
+        </div>
+      </>
     );
   }
 
   return (
     <>
+      <DefaultMeta title="slides.ihate.work" />
       <MarkdownSlides text={text} />
     </>
   );
