@@ -46,6 +46,7 @@
     "node": "^18"
   },
   "devDependencies": {
+    "@cloudflare/next-on-pages": "^1.8.2",
     "@next/bundle-analyzer": "^14",
     "@types/debug": "^4.1.12",
     "@types/jest": "^29",
