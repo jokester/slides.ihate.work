@@ -6,6 +6,7 @@
 *.map
 /coverage
 /.next
+/.vercel
 /.env
 node_modules
 
