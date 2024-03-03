@@ -4,6 +4,8 @@ import { MarkdownSlides } from '../markdown/markdown-slides';
 import Head from 'next/head';
 import { revealCodeThemes, revealThemes } from '../components/cdn_assets';
 import { DefaultMeta } from '../components/meta/default-meta';
+import { useSearchParams } from 'next/navigation';
+import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
 
 function PageHeader() {
   return (
@@ -93,8 +95,18 @@ function MarkdownHelp() {
   );
 }
 
+async function fetchText(url: string) {
+  return (await fetch(url)).text();
+}
+
 export function MarkdownPage() {
   const [text, setText] = useState('');
+  const markdownUrl = useSearchParams().get('markdownUrl');
+  useAsyncEffect(async () => {
+    if (markdownUrl) {
+      setText(await fetchText(markdownUrl));
+    }
+  });
 
   if (!text) {
     return (
