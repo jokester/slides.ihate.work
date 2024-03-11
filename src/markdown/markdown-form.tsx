@@ -54,7 +54,6 @@ async function readFormValue(f: HTMLFormElement): Promise<string> {
 export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
   const [loaded, setLoaded] = useState(true);
   useAsyncEffect(async (running) => {
-    await import('./markdown-reveal');
     if (running.current) {
       setLoaded(true);
     }

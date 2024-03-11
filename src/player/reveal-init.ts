@@ -1,17 +1,12 @@
-// @ts-ignore
 import Reveal from 'reveal.js';
-// @ts-ignore
 import RevealMarkdown from 'reveal.js/plugin/markdown/markdown';
-// @ts-ignore
 import RevealHighlight from 'reveal.js/plugin/highlight/highlight';
-// @ts-ignore
 import RevealSearch from 'reveal.js/plugin/search/search';
-// @ts-ignore
-import RevealMath from 'reveal.js/plugin/math/math';
+import { MathJax3 } from 'reveal.js/plugin/math/math';
 // @ts-ignore
 import RevealMermaid from 'reveal.js-mermaid-plugin/plugin/mermaid/mermaid';
 
-export async function startReveal() {
+export async function startReveal(): Promise<Reveal.Api> {
   // mermaid plugin expects this
   (window as any).Reveal ??= Reveal;
   await Reveal.initialize({
@@ -21,6 +16,7 @@ export async function startReveal() {
     slideNumber: true,
     hash: true,
     center: true,
-    plugins: [RevealMarkdown, RevealHighlight, RevealSearch, RevealMath.MathJax3, RevealMermaid],
+    plugins: [RevealMarkdown, RevealHighlight, RevealSearch, MathJax3, RevealMermaid],
   });
+  return Reveal;
 }
