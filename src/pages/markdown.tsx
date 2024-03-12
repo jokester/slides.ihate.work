@@ -1,9 +1,9 @@
 import { Fragment, useState } from 'react';
 import { MarkdownForm } from '../markdown/markdown-form';
-import { MarkdownSlides } from '../markdown/markdown-slides';
 import { DefaultMeta } from '../components/meta/default-meta';
 import { useSearchParams } from 'next/navigation';
 import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
+import { RevealSlideWrapper } from '../player/reveal-slide-wrapper';
 
 function PageHeader() {
   return (
@@ -104,7 +104,7 @@ export function MarkdownPage() {
     if (markdownUrl) {
       setText(await fetchText(markdownUrl));
     }
-  });
+  }, [markdownUrl]);
 
   if (!text) {
     return (
@@ -124,7 +124,7 @@ export function MarkdownPage() {
   return (
     <>
       <DefaultMeta title="slides.ihate.work" />
-      <MarkdownSlides text={text} />
+      <RevealSlideWrapper onDestroy={() => setText('')} text={text} />
     </>
   );
 }
