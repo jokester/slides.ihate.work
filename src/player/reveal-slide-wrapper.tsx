@@ -12,6 +12,9 @@ interface RevealSlideWrapperProps {
   onDestroy?(): void;
 }
 
+/**
+ * End presentation on ESC double click within 0.5s
+ */
 function useEscDoubleclick({ onDestroy }: RevealSlideWrapperProps, iframeRef: RefObject<HTMLIFrameElement>): void {
   useAsyncEffect(
     async (running, released) => {
@@ -32,14 +35,15 @@ function useEscDoubleclick({ onDestroy }: RevealSlideWrapperProps, iframeRef: Re
           logger('key pressed', ev);
         }),
         filter((e) => e.key === 'Escape'),
-        scan((acc, _) => acc + 1, 0),
+        scan<KeyboardEvent, number[]>((acc, _) => [Date.now(), ...acc].slice(0, 10), []),
         tap((value) => {
           logger('escape key pressed %d times', value);
         }),
       );
 
       const s = $escape.subscribe((count) => {
-        if (count >= 2) {
+        const [t0, t1] = count;
+        if (t0 && t1 && t0 <= t1 + 0.5e3) {
           onDestroy();
         }
       });
@@ -74,6 +78,15 @@ export function RevealSlideWrapper(props: RevealSlideWrapperProps) {
     [props.text],
   );
 
+  useEffect(() => {
+    const innerDoc = iframeRef.current?.contentDocument;
+    if (assetUrl && innerDoc) {
+      // let reveal.js respond to key event immediately
+      iframeRef.current.focus();
+      innerDoc.body.focus({});
+    }
+  });
+
   const iframeUrl = useMemo(() => {
     if (!assetUrl) {
       return '';
@@ -81,14 +94,18 @@ export function RevealSlideWrapper(props: RevealSlideWrapperProps) {
     return `/_internal/reveal-player?url=${encodeURIComponent(assetUrl)}`;
   }, [assetUrl]);
 
+  const closeButton = (
+    <div className="absolute left-0 top-0 p-4 invisible hover:visible">
+      <Button type="button" onClick={props.onDestroy}>
+        Close
+      </Button>
+    </div>
+  );
+
   if (iframeUrl) {
     return (
       <>
-        <div className="absolute left-0 top-0 p-4 hidden hover:inline-block">
-          <Button type="button" onClick={props.onDestroy}>
-            Close
-          </Button>
-        </div>
+        {closeButton}
         <iframe ref={iframeRef} key={iframeUrl} style={{ width: '100vw', height: '100vh' }} src={iframeUrl} />
       </>
     );
