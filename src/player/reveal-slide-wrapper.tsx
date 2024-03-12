@@ -78,10 +78,11 @@ export function RevealSlideWrapper(props: RevealSlideWrapperProps) {
     [props.text],
   );
 
+  // FIXME: this is not working.
+  // It *should* let reveal.js respond to key event immediately
   useEffect(() => {
     const innerDoc = iframeRef.current?.contentDocument;
-    const activeElement = innerDoc?.activeElement;
-    if (innerDoc && !activeElement) {
+    if (assetUrl && innerDoc) {
       iframeRef.current.focus();
       innerDoc.body.focus({});
     }
