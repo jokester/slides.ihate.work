@@ -78,6 +78,13 @@ export function RevealSlideWrapper(props: RevealSlideWrapperProps) {
     [props.text],
   );
 
+  useEffect(() => {
+    const activeElement = iframeRef.current?.contentDocument?.activeElement;
+    if (!activeElement) {
+      iframeRef.current!.contentDocument!.body.focus({});
+    }
+  });
+
   const iframeUrl = useMemo(() => {
     if (!assetUrl) {
       return '';
