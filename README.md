@@ -1,26 +1,10 @@
 # slides.ihate.work
 
-A site to show slides with reveal.js
+A site to present Markdown slides with reveal.js
 
 ## Run in local
 
 ```
-yarn
-yarn dev
+npm i
+npm run dev
 ```
-
-## Preview before deploying to CF Worker
-
-```
-yarn wrangler deploy --dry-run --outdir=./worker-preview --minify=true
-```
-
-## Run in Cloudflare Worker
-
-Set `env.prod.route` in `wrangler.toml` and run:
-
-```
-yarn build
-yarn wrangler deploy --env=prod --minify=true
-```
-

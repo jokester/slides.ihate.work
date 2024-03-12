@@ -1,8 +1,6 @@
 import { Fragment, useState } from 'react';
 import { MarkdownForm } from '../markdown/markdown-form';
 import { MarkdownSlides } from '../markdown/markdown-slides';
-import Head from 'next/head';
-import { revealCodeThemes, revealThemes } from '../components/cdn_assets';
 import { DefaultMeta } from '../components/meta/default-meta';
 import { useSearchParams } from 'next/navigation';
 import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';

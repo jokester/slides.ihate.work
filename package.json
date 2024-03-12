@@ -21,12 +21,12 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@jokester/ts-commonutil": "^0.4.2",
+    "@jokester/ts-commonutil": "^0.5.0",
     "@mui/icons-material": "^5.15.0",
     "@mui/material": "^5.15.0",
     "@next/eslint-plugin-next": "^14.0.4",
     "clsx": "^2.0.0",
-    "date-fns": "^2.30.0",
+    "date-fns": "^3.4.0",
     "debug": "^4.3.4",
     "fp-ts": "<3",
     "immer": "^10.0.3",
@@ -35,14 +35,14 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-use": "^17.4.2",
-    "reveal.js": "^5.0.2",
+    "reveal.js": "^5.0.5",
     "reveal.js-mermaid-plugin": "^2.0.0",
     "rxjs": "^7.8.1",
     "tslib": "^2",
     "use-constant": "^1.1.1"
   },
   "engines": {
-    "node": "^18"
+    "node": "^20"
   },
   "devDependencies": {
     "@next/bundle-analyzer": "^14",
@@ -52,6 +52,7 @@
     "@types/node": "^20",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.17",
+    "@types/reveal.js": "^5.0.1",
     "autoprefixer": "^10",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-react": "^7.33.2",
@@ -62,10 +63,10 @@
     "sass": "^1.69.5",
     "tailwindcss": "^3.3.6",
     "ts-jest": "^29",
-    "typescript": "^5.3"
+    "typescript": "^5.4"
   },
   "resolutions": {
-    "@types/node": "=18",
+    "@types/node": "=20",
     "tslib": "^2"
   }
 }
