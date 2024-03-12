@@ -79,9 +79,10 @@ export function RevealSlideWrapper(props: RevealSlideWrapperProps) {
   );
 
   useEffect(() => {
-    const activeElement = iframeRef.current?.contentDocument?.activeElement;
-    if (!activeElement) {
-      iframeRef.current!.contentDocument!.body.focus({});
+    const innerDoc = iframeRef.current?.contentDocument;
+    const activeElement = innerDoc?.activeElement;
+    if (innerDoc && !activeElement) {
+      innerDoc.body.focus({});
     }
   });
 
