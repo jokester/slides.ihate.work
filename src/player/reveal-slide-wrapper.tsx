@@ -82,6 +82,7 @@ export function RevealSlideWrapper(props: RevealSlideWrapperProps) {
     const innerDoc = iframeRef.current?.contentDocument;
     const activeElement = innerDoc?.activeElement;
     if (innerDoc && !activeElement) {
+      iframeRef.current.focus();
       innerDoc.body.focus({});
     }
   });
