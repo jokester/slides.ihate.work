@@ -1,4 +1,8 @@
-import { Fragment } from 'react';
+import { Fragment, PropsWithChildren } from 'react';
+
+export function PageContainer(props: PropsWithChildren) {
+  return <div className='container mx-auto min-h-screen flex flex-col'>{props.children}</div>;
+}
 
 export function PageHeader() {
   return (

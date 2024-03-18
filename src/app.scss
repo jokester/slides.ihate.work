@@ -7,6 +7,10 @@ body {
   min-height: 100%;
 }
 
-body.reveal-viewport > #__next {
+body {
+  overflow-y: scroll;
+}
+
+body.reveal-viewport>#__next {
   height: 100%;
 }
