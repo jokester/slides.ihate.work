@@ -1,1 +1,1 @@
-export class SourceError extends Error { }
+export class SourceError extends Error {}

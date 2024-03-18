@@ -1,10 +1,13 @@
 import clsx from 'clsx';
 import { Button } from '@mui/material';
-import { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { PropsWithChildren, useRef, useState } from 'react';
 import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
 
 interface MarkdownFormProps {
+  initialValue?: string;
+
   onStart(text: string): void;
+
   className?: string;
 }
 
@@ -70,6 +73,7 @@ export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
 
   return (
     <div className={clsx('w-full', props.className)}>
+      <p className="text-lg">Starting a presentation is as simple like</p>
       <form ref={formRef}>
         <div className="sm:grid grid-cols-2 gap-1">
           <label className="flex sm:px-4 flex-col justify-center text-lg">
@@ -78,7 +82,13 @@ export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
           </label>
           <label>
             <span className="text-lg">2️⃣ Or, input some Markdown text:</span>
-            <textarea className="w-full border p-1" name="text" rows={20} cols={80} defaultValue={defaultSlideText} />
+            <textarea
+              className="w-full border p-1"
+              name="text"
+              rows={20}
+              cols={80}
+              defaultValue={props.initialValue || defaultSlideText}
+            />
           </label>
         </div>
         <br />
