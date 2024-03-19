@@ -5,5 +5,5 @@ export function extractErrorMessage(e: any): string {
   if (typeof e === 'string') {
     return e;
   }
-  return e?.message ?? e?.code ?? 'error occured';
+  return e?.message ?? e?.code ?? 'error occurred';
 }

@@ -1,14 +1,15 @@
-import clsx from 'clsx';
-import { Button } from '@mui/material';
-import { PropsWithChildren, useEffect, useRef, useState } from 'react';
-import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
+import { PropsWithChildren, useRef, useState } from 'react';
+import { MarkdownTextarea } from './markdown-textarea';
 
 interface MarkdownFormProps {
+  initialValue: string;
+
   onStart(text: string): void;
+
   className?: string;
 }
 
-const defaultSlideText = `
+export const defaultSlideText = `
 
 ## Section 1
 
@@ -52,42 +53,21 @@ async function readFormValue(f: HTMLFormElement): Promise<string> {
 }
 
 export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
-  const [loaded, setLoaded] = useState(true);
-  useAsyncEffect(async (running) => {
-    if (running.current) {
-      setLoaded(true);
+  const [text, setText] = useState(props.initialValue);
+  const onTextChange = (newText: string, isManualEdit: boolean) => {
+    if (isManualEdit || !text || newText === props.initialValue) {
+      setText(newText);
+    } else if (confirm('Overwrite current input?')) {
+      setText(newText);
     }
-  }, []);
-
-  const formRef = useRef<HTMLFormElement>(null);
-
-  const onStart = () => {
-    const f: HTMLFormElement = formRef.current!;
-    readFormValue(f).then((v) => {
-      props.onStart(v);
-    });
   };
 
   return (
-    <div className={clsx('w-full', props.className)}>
-      <form ref={formRef}>
-        <div className="sm:grid grid-cols-2 gap-1">
-          <label className="flex sm:px-4 flex-col justify-center text-lg">
-            1️⃣ Select a Markdown file:
-            <input className="" type="file" name="file" accept=".md,.markdown,mime/markdown" />
-          </label>
-          <label>
-            <span className="text-lg">2️⃣ Or, input some Markdown text:</span>
-            <textarea className="w-full border p-1" name="text" rows={20} cols={80} defaultValue={defaultSlideText} />
-          </label>
-        </div>
-        <br />
-        <label className="flex w-full justify-center items-center">
-          <Button variant="outlined" className="" type="button" onClick={onStart} disabled={!loaded}>
-            and 3️⃣ START
-          </Button>
-        </label>
-      </form>
-    </div>
+    <MarkdownTextarea
+      value={text}
+      onChange={onTextChange}
+      showUploadButton={true}
+      onStart={() => props.onStart(text)}
+    />
   );
 }

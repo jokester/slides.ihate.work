@@ -1,22 +1,25 @@
-import { Fragment, useState } from 'react';
-import { MarkdownForm } from '../markdown/markdown-form';
-import { DefaultMeta } from '../components/meta/default-meta';
-import { useSearchParams } from 'next/navigation';
-import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
-import { RevealSlideWrapper } from '../player/reveal-slide-wrapper';
+import Link from 'next/link';
+import { Fragment, PropsWithChildren } from 'react';
 
-function PageHeader() {
+export function PageContainer(props: PropsWithChildren) {
+  return <div className="container mx-auto min-h-screen flex flex-col">{props.children}</div>;
+}
+
+export function PageHeader() {
   return (
     <>
-      <h1 className="text-xl my-2 text-center">slides.ihate.work</h1>
+      <h1 className="text-xl my-2 text-center">
+        <Link href="/" className="text-blue-500">
+          slides.ihate.work
+        </Link>
+      </h1>
       <h2 className="text-lg my-1 text-center">A site to present Markdown slides</h2>
       <hr className="my-4" />
-      <p className="text-lg">Starting a presentation is as simple like</p>
     </>
   );
 }
 
-function PageFooter() {
+export function PageFooter() {
   return (
     <footer className="px-4 text-center">
       <p>
@@ -48,7 +51,7 @@ function PageFooter() {
   );
 }
 
-function MarkdownHelp() {
+export function MarkdownHelp() {
   return (
     <div className="my-4 px-4">
       <ul>
@@ -90,41 +93,5 @@ function MarkdownHelp() {
         </li>
       </ul>
     </div>
-  );
-}
-
-async function fetchText(url: string) {
-  return (await fetch(url)).text();
-}
-
-export function MarkdownPage() {
-  const [text, setText] = useState('');
-  const markdownUrl = useSearchParams().get('markdownUrl');
-  useAsyncEffect(async () => {
-    if (markdownUrl) {
-      setText(await fetchText(markdownUrl));
-    }
-  }, [markdownUrl]);
-
-  if (!text) {
-    return (
-      <>
-        <DefaultMeta title="slides.ihate.work" />
-        <div className="container mx-auto px-2 py-4 flex flex-col min-h-screen">
-          <PageHeader />
-          <MarkdownForm onStart={setText} />
-          <MarkdownHelp />
-          <div className="flex-grow flex-shrink-0" />
-          <PageFooter />
-        </div>
-      </>
-    );
-  }
-
-  return (
-    <>
-      <DefaultMeta title="slides.ihate.work" />
-      <RevealSlideWrapper onDestroy={() => setText('')} text={text} />
-    </>
   );
 }

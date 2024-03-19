@@ -4,11 +4,13 @@ import { wait } from '@jokester/ts-commonutil/lib/concurrency/timing';
 import { filter, fromEvent, merge, scan, tap } from 'rxjs';
 import debug from 'debug';
 import { Button } from '@mui/material';
+import { enqueueSnackbar, closeSnackbar } from 'notistack';
 
 const logger = debug('src:player:reveal-slide-wrapper');
 
 interface RevealSlideWrapperProps {
   text: string;
+
   onDestroy?(): void;
 }
 
@@ -42,9 +44,13 @@ function useEscDoubleclick({ onDestroy }: RevealSlideWrapperProps, iframeRef: Re
       );
 
       const s = $escape.subscribe((count) => {
-        const [t0, t1] = count;
-        if (t0 && t1 && t0 <= t1 + 0.5e3) {
+        const [tLatest, tPrev] = count;
+        if (tLatest && tPrev && tLatest <= tPrev + 0.5e3) {
           onDestroy();
+          closeSnackbar();
+          enqueueSnackbar('presentation ended', { variant: 'info' });
+        } else if (!tPrev || tLatest <= tPrev + 2e3) {
+          enqueueSnackbar('double click ESC to exit', { variant: 'info' });
         }
       });
       logger('useEscDoubleclick', s);

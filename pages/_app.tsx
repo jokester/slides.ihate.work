@@ -2,6 +2,7 @@ import React from 'react';
 import App, { AppProps } from 'next/app';
 import '../src/app.scss';
 import { DefaultMeta } from '../src/components/meta/default-meta';
+import { SnackbarProvider } from 'notistack';
 import Head from 'next/head';
 
 const CustomApp: React.FC<AppProps> & Partial<Pick<typeof App, 'getInitialProps'>> = (props) => {
@@ -16,6 +17,7 @@ const CustomApp: React.FC<AppProps> & Partial<Pick<typeof App, 'getInitialProps'
         />
       </Head>
       <DefaultMeta />
+      <SnackbarProvider />
       <Component {...pageProps} />
     </>
   );
