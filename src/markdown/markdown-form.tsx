@@ -62,5 +62,12 @@ export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
     }
   };
 
-  return <MarkdownTextarea value={text} onChange={onTextChange} showUploadButton={true} />;
+  return (
+    <MarkdownTextarea
+      value={text}
+      onChange={onTextChange}
+      showUploadButton={true}
+      onStart={() => props.onStart(text)}
+    />
+  );
 }
