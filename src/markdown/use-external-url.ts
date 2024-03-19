@@ -1,7 +1,6 @@
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
-import { Route } from 'next';
-import { GistSource } from '../core/GistSource';
+import { rewriteToSourceSpecificRoute } from '../routes/url-rewrite';
 
 export function useMarkdownUrlQuery(onRawFetched?: (x: string) => void) {
   const router = useRouter();
@@ -9,7 +8,7 @@ export function useMarkdownUrlQuery(onRawFetched?: (x: string) => void) {
   useAsyncEffect(
     async (running) => {
       if (markdownUrl) {
-        const redirect = buildInternalRedirectDest(markdownUrl);
+        const redirect = rewriteToSourceSpecificRoute(markdownUrl);
         if (redirect instanceof Error) {
           alert(redirect.message);
           return;
@@ -26,15 +25,6 @@ export function useMarkdownUrlQuery(onRawFetched?: (x: string) => void) {
     },
     [markdownUrl],
   );
-}
-
-export function buildInternalRedirectDest(url: string): null | Route | Error {
-  const parsed = new GistSource(url).parseUrl();
-
-  if (parsed?.gistId && !parsed?.revisionId) {
-    return `/gist/${parsed.ownerId}/${parsed.gistId}`;
-  }
-  return null;
 }
 
 async function fetchText(url: string) {

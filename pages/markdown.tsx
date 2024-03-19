@@ -3,7 +3,7 @@ import { DefaultMeta } from '../src/components/meta/default-meta';
 import { MarkdownForm } from '../src/markdown/markdown-form';
 import { RevealSlideWrapper } from '../src/player/reveal-slide-wrapper';
 import { MarkdownHelp, PageContainer, PageFooter, PageHeader } from '../src/layouts';
-import { useMarkdownUrlQuery } from '../src/hooks/use-external-url';
+import { useMarkdownUrlQuery } from '../src/markdown/use-external-url';
 
 export default function MarkdownPage() {
   const [text, setText] = useState('');

@@ -1,10 +1,10 @@
-import { SourceBundle } from '../core/SourceBundle';
+import { SlideBundle } from '../core/SlideBundle';
 import { ReactElement, useState } from 'react';
 import clsx from 'clsx';
 import { Button } from '@mui/material';
 
 export function GistTextarea(props: {
-  bundle: SourceBundle;
+  bundle: SlideBundle;
   initialValue?: string;
   className?: string;
   onStart?(markdownText: string): void;

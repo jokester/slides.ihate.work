@@ -1,6 +1,7 @@
 import { Octokit } from '@octokit/rest';
-import { SourceBundle } from './SourceBundle';
+import { SlideBundle } from './SlideBundle';
 import { SourceError } from './errors';
+import { isUrl } from './url-loader';
 
 interface GistSourceLocator {
   ownerId: string;
@@ -8,7 +9,26 @@ interface GistSourceLocator {
   revisionId?: string;
 }
 
+function parseUrl(u: URL): GistSourceLocator | null {
+  const parts = u.pathname.split('/');
+  const [_empty, ownerId, gistId, revisionId, ...rest] = parts;
+  if (gistId?.length === 32 && !revisionId) {
+    return {
+      ownerId,
+      gistId,
+    };
+  }
+  // TODO: support more patterns
+  return null;
+}
+
 export class GistSource {
+  static isGistUrl(url: string): boolean {
+    return isUrl(url) && !!parseUrl(new URL(url));
+  }
+
+  readonly locator: Readonly<GistSourceLocator>;
+
   /**
    * @param gistUrl like:
    * - https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8
@@ -22,41 +42,26 @@ export class GistSource {
   constructor(
     readonly gistUrl: string,
     private readonly client = new Octokit(),
-  ) {}
+  ) {
+    this.locator = parseUrl(new URL(gistUrl))!;
+  }
 
   get fetchKey(): string {
     return `gistId=${this.gistUrl}`;
   }
 
-  get pageUrl(): string | null {
-    const parsed = this.parseUrl();
-    if (!parsed) {
-      return null;
-    }
+  get pageUrl(): string {
+    const parsed = this.locator;
 
     return `https://gist.github.com/${parsed.ownerId}/${parsed.gistId}`;
-  }
-
-  parseUrl(): GistSourceLocator | null {
-    const u = new URL(this.gistUrl);
-    const parts = u.pathname.split('/');
-    const [_empty, ownerId, gistId, revisionId, ...rest] = parts;
-    if (gistId?.length === 32 && !revisionId) {
-      return {
-        ownerId,
-        gistId,
-      };
-    }
-    // TODO: support more patterns
-    return null;
   }
 
   /**
    * @return a asset bundle fetched from github
    */
-  async fetchSource(): Promise<SourceBundle> {
+  async fetchSource(): Promise<SlideBundle> {
     const res = await this.client.rest.gists.get({
-      gist_id: this.parseUrl()!.gistId,
+      gist_id: this.locator.gistId,
     });
 
     const files = Object.values(res.data.files || {});
@@ -73,6 +78,7 @@ export class GistSource {
     // TODO: fetch assets (most likely to be images) from gist files or gist comments?
     return {
       slideText: mdFile?.content ?? '',
+      gistSource: this,
     };
   }
 }
