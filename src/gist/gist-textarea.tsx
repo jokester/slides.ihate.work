@@ -11,5 +11,12 @@ export function GistTextarea(props: {
   onStart?(markdownText: string): void;
 }): ReactElement {
   const [text, setText] = useState(props.initialValue || props.bundle.slideText);
-  return <MarkdownTextarea value={text} onChange={setText} onStart={props.onStart} className={props.className} />;
+  return (
+    <MarkdownTextarea
+      value={text}
+      onChange={setText}
+      onStart={() => props.onStart?.(text)}
+      className={props.className}
+    />
+  );
 }
