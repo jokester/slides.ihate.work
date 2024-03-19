@@ -6,6 +6,8 @@ import { ExternalSourceInput } from '../src/components/external-src-input';
 import debug from 'debug';
 import { SlideBundle } from '../src/core/SlideBundle';
 import { rewriteSrcToRoute } from '../src/routes/url-rewrite';
+import Link from 'next/link';
+import { Button } from '@mui/material';
 
 const logger = debug('pages:index');
 
@@ -28,6 +30,12 @@ function IndexPageContent() {
 
       <div>
         <ExternalSourceInput onLoad={onSrcLoaded} />
+      </div>
+      <p className="my-8 text-center">or</p>
+      <div className="text-center">
+        <Link href={'/markdown'}>
+          <Button variant="outlined">Paste markdown text</Button>
+        </Link>
       </div>
     </PageContainer>
   );

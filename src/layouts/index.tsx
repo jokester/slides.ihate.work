@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { Fragment, PropsWithChildren } from 'react';
 
 export function PageContainer(props: PropsWithChildren) {
@@ -7,7 +8,11 @@ export function PageContainer(props: PropsWithChildren) {
 export function PageHeader() {
   return (
     <>
-      <h1 className="text-xl my-2 text-center">slides.ihate.work</h1>
+      <h1 className="text-xl my-2 text-center">
+        <Link href="/" className="text-blue-500">
+          slides.ihate.work
+        </Link>
+      </h1>
       <h2 className="text-lg my-1 text-center">A site to present Markdown slides</h2>
       <hr className="my-4" />
     </>

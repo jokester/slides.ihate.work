@@ -32,7 +32,7 @@ export function ExternalSourceInput(props: { onLoad?(bundle: SlideBundle): void 
       <div>
         <TextField
           className={clsx('w-full')}
-          label="URL of gist or any URL of the markdown content"
+          label="URL to load. Currently gist is supported"
           variant="outlined"
           value={urlValue}
           onChange={(ev) => setUrlValue(ev.target.value)}
@@ -43,10 +43,10 @@ export function ExternalSourceInput(props: { onLoad?(bundle: SlideBundle): void 
           }}
         />
       </div>
-      <div>
+      <div className="flex flex-row justify-center">
         <Button
           type="button"
-          className="mx-auto"
+          className="mx-auto w-64"
           variant="outlined"
           color="primary"
           onClick={onStartLoad}
