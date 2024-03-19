@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { PageContainer, PageHeader } from '../src/layouts';
+import { MarkdownHelp, PageContainer, PageFooter, PageHeader } from '../src/layouts';
 import { ExternalSourceInput } from '../src/components/external-src-input';
 import debug from 'debug';
 import { SlideBundle } from '../src/core/SlideBundle';
@@ -34,9 +34,12 @@ function IndexPageContent() {
       <p className="my-8 text-center">or</p>
       <div className="text-center">
         <Link href={'/markdown'}>
-          <Button variant="outlined">Paste markdown text</Button>
+          <Button variant="outlined">Paste markdown text or file</Button>
         </Link>
       </div>
+      <div className="flex-1" />
+      <MarkdownHelp />
+      <PageFooter />
     </PageContainer>
   );
 }

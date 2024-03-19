@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { DefaultMeta } from '../src/components/meta/default-meta';
-import { MarkdownForm } from '../src/markdown/markdown-form';
+import { MarkdownForm, defaultSlideText } from '../src/markdown/markdown-form';
 import { RevealSlideWrapper } from '../src/player/reveal-slide-wrapper';
 import { MarkdownHelp, PageContainer, PageFooter, PageHeader } from '../src/layouts';
-import { useMarkdownUrlQuery } from '../src/markdown/use-external-url';
 
 export default function MarkdownPage() {
   const [text, setText] = useState('');
@@ -12,7 +11,6 @@ export default function MarkdownPage() {
     setText(newText);
     setPlayback(true);
   };
-  useMarkdownUrlQuery(onStartPlayback);
 
   if (!playback) {
     return (
@@ -20,10 +18,9 @@ export default function MarkdownPage() {
         <DefaultMeta title="slides.ihate.work" />
         <PageContainer>
           <PageHeader />
-          <MarkdownForm onStart={onStartPlayback} />
+          <MarkdownForm onStart={onStartPlayback} initialValue={defaultSlideText} />
           <MarkdownHelp />
           <div className="flex-grow flex-shrink-0" />
-          <PageFooter />
         </PageContainer>
       </>
     );
