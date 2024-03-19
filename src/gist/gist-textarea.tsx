@@ -11,7 +11,7 @@ export function GistTextarea(props: {
 }): ReactElement {
   const [text, setText] = useState(props.initialValue || props.bundle.slideText);
   return (
-    <div className={clsx('w-full', props.className)}>
+    <div className={clsx('max-w-screen-lg mx-auto px-4', props.className)}>
       <form>
         <div className="">
           <label>

@@ -8,9 +8,9 @@ body {
 }
 
 body {
-  overflow-y: scroll;
+  //overflow-y: scroll;
 }
 
-body.reveal-viewport>#__next {
+body.reveal-viewport > #__next {
   height: 100%;
 }

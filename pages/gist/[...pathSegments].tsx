@@ -6,7 +6,7 @@ import useSWR from 'swr';
 import { RenderSwr } from '../../src/components/RenderSwr';
 import { GistTextarea } from '../../src/gist/gist-textarea';
 import { DefaultMeta } from '../../src/components/meta/default-meta';
-import { PageHeader } from '../../src/layouts';
+import { PageContainer, PageHeader } from '../../src/layouts';
 import { RevealSlideWrapper } from '../../src/player/reveal-slide-wrapper';
 
 const logger = debug('pages:gist');
@@ -25,17 +25,13 @@ function GistSourcePageContent({ src }: { src: GistSource }) {
 
   if (!playback) {
     return (
-      <div>
+      <PageContainer>
+        <PageHeader />
+        <DefaultMeta title="slides.ihate.work" />
         <RenderSwr res={fetched}>
-          {(v) => (
-            <>
-              <DefaultMeta title="slides.ihate.work" />
-              <PageHeader />
-              <GistTextarea bundle={v} initialValue={text} onStart={onStartPlayback} />
-            </>
-          )}
+          {(v) => <GistTextarea bundle={v} initialValue={text} onStart={onStartPlayback} />}
         </RenderSwr>
-      </div>
+      </PageContainer>
     );
   }
 
