@@ -7,7 +7,7 @@ import { isUrl } from '../core/url-loader';
 /**
  * For source URLs we have dedicated support, redirect to appropriate page route
  */
-export function rewriteToSourceSpecificRoute(url: string): null | Route | Error {
+export function rewriteUrlToRoute(url: string): null | Route | Error {
   if (!isUrl(url)) {
     return new Error('Invalid URL');
   }

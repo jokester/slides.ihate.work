@@ -6,7 +6,7 @@ import { MarkdownHelp, PageContainer, PageFooter, PageHeader } from '../src/layo
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
 import { isUrl } from '../src/core/url-loader';
-import { rewriteToSourceSpecificRoute } from '../src/routes/url-rewrite';
+import { rewriteUrlToRoute } from '../src/routes/url-rewrite';
 import { extractErrorMessage } from '../src/utils';
 
 /**
@@ -53,7 +53,7 @@ export function useMarkdownUrlQuery(onRawFetched?: (x: string) => void) {
   useAsyncEffect(
     async (running) => {
       if (markdownUrl && isUrl(markdownUrl)) {
-        const redirect = rewriteToSourceSpecificRoute(markdownUrl);
+        const redirect = rewriteUrlToRoute(markdownUrl);
         if (redirect instanceof Error) {
           alert(redirect.message);
           return;
