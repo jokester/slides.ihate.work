@@ -4,8 +4,7 @@ import { useRouter } from 'next/router';
 import { MarkdownHelp, PageContainer, PageFooter, PageHeader } from '../src/layouts';
 import { ExternalSourceInput } from '../src/components/external-src-input';
 import debug from 'debug';
-import { SlideBundle } from '../src/core/SlideBundle';
-import { rewriteSrcToRoute } from '../src/routes/url-rewrite';
+import { rewriteUrlToRoute } from '../src/routes/url-rewrite';
 import Link from 'next/link';
 import { Button } from '@mui/material';
 
@@ -13,15 +12,15 @@ const logger = debug('pages:index');
 
 function IndexPageContent() {
   const router = useRouter();
-  const onSrcLoaded = (b: SlideBundle) => {
-    logger('onSrcLoaded', b);
-    const newRoute = rewriteSrcToRoute(b);
-    if (!newRoute) {
-      alert('unsupported source');
-    } else if (newRoute instanceof Error) {
-      alert(newRoute.message);
+  const onSourceUrlSubmit = (url: string) => {
+    const nextPath = rewriteUrlToRoute(url);
+    logger('onSourceUrlSubmit', url, nextPath);
+    if (nextPath instanceof Error) {
+      alert(nextPath.message);
+    } else if (nextPath) {
+      router.push(nextPath);
     } else {
-      router.push(newRoute);
+      router.push(`/markdown?markdownUrl=${encodeURIComponent(url)}`);
     }
   };
   return (
@@ -29,7 +28,7 @@ function IndexPageContent() {
       <PageHeader />
 
       <div>
-        <ExternalSourceInput onLoad={onSrcLoaded} />
+        <ExternalSourceInput onSubmit={onSourceUrlSubmit} />
       </div>
       <p className="my-8 text-center">or</p>
       <div className="text-center">

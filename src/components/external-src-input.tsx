@@ -1,32 +1,23 @@
 import { Button, Input, TextField } from '@mui/material';
 import clsx from 'clsx';
-import { useMemo, useState } from 'react';
-import { SlideBundle } from '../core/SlideBundle';
+import { useState } from 'react';
 import { useToggle } from 'react-use';
 import { detectSourceUrlType, isUrl, loadExternalSourceUrl } from '../core/url-loader';
-import { extractErrorMessage } from '../utils';
 import { GitHub } from '@mui/icons-material';
 
-export function ExternalSourceInput(props: { onLoad?(bundle: SlideBundle): void }) {
+export function ExternalSourceInput(props: { onSubmit?(url: string): void }) {
   const [urlValue, setUrlValue] = useState('');
   const [loading, setLoading] = useToggle(false);
   const detectedType = detectSourceUrlType(urlValue);
 
-  const onStartLoad = async () => {
-    if (loading || !urlValue) {
+  const onSubmit = () => {
+    if (!isUrl(urlValue)) {
+      alert('Invalid URL');
       return;
     }
-    try {
-      setLoading(true);
-      const loaded = await loadExternalSourceUrl(urlValue);
-      props.onLoad?.(loaded);
-    } catch (e) {
-      console.error(e);
-      alert(extractErrorMessage(e));
-    } finally {
-      setLoading(false);
-    }
+    props.onSubmit?.(urlValue);
   };
+
   return (
     <div className="space-y-2">
       <div>
@@ -38,7 +29,7 @@ export function ExternalSourceInput(props: { onLoad?(bundle: SlideBundle): void 
           onChange={(ev) => setUrlValue(ev.target.value)}
           onKeyUp={(ev) => {
             if (ev.key === 'Enter') {
-              onStartLoad();
+              onSubmit();
             }
           }}
         />
@@ -49,7 +40,7 @@ export function ExternalSourceInput(props: { onLoad?(bundle: SlideBundle): void 
           className="mx-auto w-64"
           variant="outlined"
           color="primary"
-          onClick={onStartLoad}
+          onClick={onSubmit}
           aria-busy={loading}
           disabled={loading || !urlValue}
         >

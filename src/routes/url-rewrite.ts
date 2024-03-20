@@ -2,9 +2,15 @@ import { Route } from 'next';
 import { GistSource } from '../core/GistSource';
 import { SlideBundle } from '../core/SlideBundle';
 import { FetchTextSource } from '../core/FetchTextSource';
+import { isUrl } from '../core/url-loader';
 
-export function rewriteToSourceSpecificRoute(url: string): null | Route | Error {
-  new URL(url);
+/**
+ * For source URLs we have dedicated support, redirect to appropriate page route
+ */
+export function rewriteUrlToRoute(url: string): null | Route | Error {
+  if (!isUrl(url)) {
+    return new Error('Invalid URL');
+  }
   if (GistSource.isGistUrl(url)) {
     const parsed = new GistSource(url).locator;
     if (parsed?.gistId && !parsed?.revisionId) {
