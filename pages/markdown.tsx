@@ -3,11 +3,14 @@ import { DefaultMeta } from '../src/components/meta/default-meta';
 import { MarkdownForm, defaultSlideText } from '../src/markdown/markdown-form';
 import { RevealSlideWrapper } from '../src/player/reveal-slide-wrapper';
 import { MarkdownHelp, PageContainer, PageFooter, PageHeader } from '../src/layouts';
-import { useRouter, useSearchParams } from 'next/navigation';
 import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
 import { isUrl } from '../src/core/url-loader';
 import { rewriteUrlToRoute } from '../src/routes/url-rewrite';
 import { extractErrorMessage } from '../src/utils';
+import debug from 'debug';
+import { useRouter } from 'next/router';
+
+const logger = debug('pages:markdown');
 
 /**
  * /markdown page
@@ -16,11 +19,21 @@ import { extractErrorMessage } from '../src/utils';
 export default function MarkdownPage() {
   const [text, setText] = useState('');
   const [playback, setPlayback] = useState(false);
-  const onStartPlayback = (newText: string) => {
-    setText(newText);
+  const onTextChange = (newText: string, isManualEdit: boolean) => {
+    if (isManualEdit || !text || text === defaultSlideText) {
+      setText(newText);
+    } else if (confirm('Overwrite current input?')) {
+      setText(newText);
+    }
+  };
+
+  const onStartPlayback = () => {
     setPlayback(true);
   };
-  useMarkdownUrlQuery(onStartPlayback);
+  useTextInitialize((initialValue) => {
+    logger('externalText', initialValue);
+    setText(initialValue);
+  });
 
   if (!playback) {
     return (
@@ -28,7 +41,7 @@ export default function MarkdownPage() {
         <DefaultMeta title="slides.ihate.work" />
         <PageContainer>
           <PageHeader />
-          <MarkdownForm onStart={onStartPlayback} initialValue={text || defaultSlideText} />
+          <MarkdownForm value={text} onChange={onTextChange} onStart={onStartPlayback} />
           <MarkdownHelp />
           <div className="flex-grow flex-shrink-0" />
         </PageContainer>
@@ -47,32 +60,43 @@ export default function MarkdownPage() {
 /**
  * handle `?markdownUrl=...` query
  */
-export function useMarkdownUrlQuery(onRawFetched?: (x: string) => void) {
+export function useTextInitialize(onRawFetched: (x: string) => void) {
   const router = useRouter();
-  const markdownUrl = useSearchParams().get('markdownUrl');
   useAsyncEffect(
     async (running) => {
-      if (markdownUrl && isUrl(markdownUrl)) {
-        const redirect = rewriteUrlToRoute(markdownUrl);
-        if (redirect instanceof Error) {
-          alert(redirect.message);
-          return;
+      logger('ready', router.isReady);
+      if (!router.isReady) {
+        return;
+      }
+      const markdownUrl = router.query.markdownUrl as string | undefined;
+      if (!markdownUrl) {
+        onRawFetched(defaultSlideText);
+        return;
+      }
+      if (!isUrl(markdownUrl)) {
+        alert('Invalid URL');
+        onRawFetched(defaultSlideText);
+        return;
+      }
+      const redirect = rewriteUrlToRoute(markdownUrl);
+      if (redirect instanceof Error) {
+        alert(redirect.message);
+        return;
+      }
+      if (redirect) {
+        router.push(redirect);
+        return;
+      }
+      try {
+        const externalAsset = await fetch(markdownUrl).then((res) => res.text());
+        if (running.current) {
+          onRawFetched(externalAsset);
         }
-        if (redirect) {
-          router.push(redirect);
-          return;
-        }
-        try {
-          const externalAsset = await fetch(markdownUrl).then((res) => res.text());
-          if (running.current && onRawFetched) {
-            onRawFetched(externalAsset);
-          }
-        } catch (e: unknown) {
-          console.error(e);
-          alert(extractErrorMessage(e));
-        }
+      } catch (e: unknown) {
+        console.error(e);
+        alert(extractErrorMessage(e));
       }
     },
-    [markdownUrl],
+    [router],
   );
 }

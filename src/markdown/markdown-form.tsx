@@ -2,9 +2,11 @@ import { PropsWithChildren, useState } from 'react';
 import { MarkdownTextarea } from './markdown-textarea';
 
 interface MarkdownFormProps {
-  initialValue: string;
+  value: string;
 
-  onStart(text: string): void;
+  onChange(newText: string, isManualEdit: boolean): void;
+
+  onStart(): void;
 
   className?: string;
 }
@@ -43,21 +45,5 @@ sequenceDiagram
     `.trim();
 
 export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
-  const [text, setText] = useState(props.initialValue);
-  const onTextChange = (newText: string, isManualEdit: boolean) => {
-    if (isManualEdit || !text || newText === props.initialValue) {
-      setText(newText);
-    } else if (confirm('Overwrite current input?')) {
-      setText(newText);
-    }
-  };
-
-  return (
-    <MarkdownTextarea
-      value={text}
-      onChange={onTextChange}
-      showUploadButton={true}
-      onStart={() => props.onStart(text)}
-    />
-  );
+  return <MarkdownTextarea value={props.value} onChange={props.onChange} showUploadButton onStart={props.onStart} />;
 }
