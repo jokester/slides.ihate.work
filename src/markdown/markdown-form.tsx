@@ -1,6 +1,5 @@
-import { PropsWithChildren, useRef, useState } from 'react';
+import { PropsWithChildren, useState } from 'react';
 import { MarkdownTextarea } from './markdown-textarea';
-import { useMarkdownUrlQuery } from './use-external-url';
 
 interface MarkdownFormProps {
   initialValue: string;
@@ -45,10 +44,6 @@ sequenceDiagram
 
 export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
   const [text, setText] = useState(props.initialValue);
-  useMarkdownUrlQuery((loaded) => {
-    onTextChange(loaded, true);
-    props.onStart(loaded);
-  });
   const onTextChange = (newText: string, isManualEdit: boolean) => {
     if (isManualEdit || !text || newText === props.initialValue) {
       setText(newText);
