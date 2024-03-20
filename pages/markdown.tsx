@@ -18,7 +18,7 @@ export default function MarkdownPage() {
         <DefaultMeta title="slides.ihate.work" />
         <PageContainer>
           <PageHeader />
-          <MarkdownForm onStart={onStartPlayback} initialValue={defaultSlideText} />
+          <MarkdownForm onStart={onStartPlayback} initialValue={text || defaultSlideText} />
           <MarkdownHelp />
           <div className="flex-grow flex-shrink-0" />
         </PageContainer>
