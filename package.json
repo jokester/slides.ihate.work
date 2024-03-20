@@ -19,6 +19,7 @@
   "author": "Wang Guan <momocraft@gmail.com>",
   "license": "BSD-3-Clause",
   "dependencies": {
+    "@cloudflare/next-on-pages": "^1.10.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@jokester/ts-commonutil": "^0.5.0",
@@ -36,6 +37,9 @@
     "next": "^14",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
+		"vercel": "^33.6",
+		"wrangler": "^3.36.0",
+		"@cloudflare/workers-types": "4.20240320.1",
     "react-dom": "^18.2.0",
     "react-use": "^17.4.2",
     "reveal.js": "^5.0.5",

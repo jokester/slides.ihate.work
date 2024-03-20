@@ -1,9 +1,13 @@
 /* eslint @typescript-eslint/no-var-requires: 0 */
 const { PHASE_DEVELOPMENT_SERVER, PHASE_PRODUCTION_BUILD } = require('next/constants');
+if (process.env.NODE_ENV === 'development') {
+  const { setupDevPlatform } = require('@cloudflare/next-on-pages/next-dev');
+  setupDevPlatform();
+}
 
 /**
  * when in problem, try to sync with {@link https://github.com/vercel/next.js/tree/canary/packages/create-next-app/templates/typescript}
- * @type {import('next').NextConfig}
+ * @type {import("next").NextConfig}
  */
 const nextConf = {
   poweredByHeader: false,
@@ -52,7 +56,7 @@ const nextConf = {
 
 module.exports = (phase, { defaultConfig }) => {
   /**
-   * @type {import('next').NextConfig}
+   * @type {import("next").NextConfig}
    */
   let merged = { ...nextConf };
 
