@@ -24,7 +24,7 @@ const AboutPage: NextPage<PageProps> = (props) => {
   );
 };
 
-export const runtime = 'edge';
+export const runtime = 'experimental-edge';
 
 AboutPage.getInitialProps = async (ctx) => ({
   renderedAt: Date.now(),
