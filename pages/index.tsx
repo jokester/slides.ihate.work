@@ -14,10 +14,13 @@ function IndexPageContent() {
   const router = useRouter();
   const onSourceUrlSubmit = (url: string) => {
     const nextPath = rewriteUrlToRoute(url);
+    logger('onSourceUrlSubmit', url, nextPath);
     if (nextPath instanceof Error) {
       alert(nextPath.message);
     } else if (nextPath) {
       router.push(nextPath);
+    } else {
+      router.push(`/markdown?markdownUrl=${encodeURIComponent(url)}`);
     }
   };
   return (
