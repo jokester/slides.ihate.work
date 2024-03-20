@@ -45,7 +45,10 @@ sequenceDiagram
 
 export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
   const [text, setText] = useState(props.initialValue);
-  useMarkdownUrlQuery((loaded) => onTextChange(loaded, true));
+  useMarkdownUrlQuery((loaded) => {
+    onTextChange(loaded, true);
+    props.onStart(loaded);
+  });
   const onTextChange = (newText: string, isManualEdit: boolean) => {
     if (isManualEdit || !text || newText === props.initialValue) {
       setText(newText);
