@@ -48,7 +48,7 @@ const nextConf = {
   transpilePackages: ['lodash-es', '@jokester/ts-commonutil'],
 
   images: {},
-  output: 'export',
+  // output: 'export',
 
   productionBrowserSourceMaps: true,
   reactStrictMode: true,
