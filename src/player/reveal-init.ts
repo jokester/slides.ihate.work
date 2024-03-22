@@ -6,10 +6,11 @@ import { MathJax3 } from 'reveal.js/plugin/math/math';
 // @ts-ignore
 import RevealMermaid from 'reveal.js-mermaid-plugin/plugin/mermaid/mermaid';
 
-export async function startReveal(): Promise<Reveal.Api> {
+export async function startReveal(elem: HTMLElement): Promise<Reveal.Api> {
   // mermaid plugin expects this
   (window as any).Reveal ??= Reveal;
-  await Reveal.initialize({
+  const f = new Reveal(elem, {
+    embedded: true,
     controls: true,
     progress: true,
     history: true,
@@ -17,6 +18,8 @@ export async function startReveal(): Promise<Reveal.Api> {
     hash: true,
     center: true,
     plugins: [RevealMarkdown, RevealHighlight, RevealSearch, MathJax3, RevealMermaid],
-  });
-  return Reveal;
+  })
+  // f.sync()
+  // f.next()
+  return f;
 }

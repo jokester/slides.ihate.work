@@ -9,6 +9,9 @@ import { rewriteUrlToRoute } from '../src/routes/url-rewrite';
 import { extractErrorMessage } from '../src/utils';
 import debug from 'debug';
 import { useRouter } from 'next/router';
+import { SlideBundle } from '../src/core/SlideBundle';
+import { FramedPortal } from '../src/iframe/framed-portal';
+import { RevealSlidePlayer } from '../src/player/reveal-slide-player';
 
 const logger = debug('pages:markdown');
 
@@ -18,7 +21,7 @@ const logger = debug('pages:markdown');
  */
 export default function MarkdownPage() {
   const [text, setText] = useState('');
-  const [playback, setPlayback] = useState(false);
+  const [playback, setPlayback] = useState<null | SlideBundle>(null);
   const onTextChange = (newText: string, isManualEdit: boolean) => {
     if (isManualEdit || !text || text === defaultSlideText) {
       setText(newText);
@@ -28,7 +31,9 @@ export default function MarkdownPage() {
   };
 
   const onStartPlayback = () => {
-    setPlayback(true);
+    setPlayback({
+      slideText: text,
+    });
   };
   useTextInitialize((initialValue) => {
     logger('externalText', initialValue);
@@ -52,7 +57,9 @@ export default function MarkdownPage() {
   return (
     <>
       <DefaultMeta title="slides.ihate.work" />
-      <RevealSlideWrapper onDestroy={() => setPlayback(false)} text={text} />
+      <FramedPortal>
+        <RevealSlidePlayer onDestroy={() => setPlayback(null)} bundle={playback} />
+      </FramedPortal>
     </>
   );
 }
