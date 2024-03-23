@@ -1,5 +1,6 @@
 import { SWRResponse } from 'swr';
 import { ReactElement } from 'react';
+import { extractErrorMessage } from '../utils';
 
 /**
  * @deprecated
@@ -22,7 +23,7 @@ export function useRenderSwr<Data, E>(
     return 'Loading...';
   }
   if (res.error) {
-    return `Error: ${(res.error as any as Error).message ?? ''}`;
+    return extractErrorMessage(res.error);
   }
-  return onValue(d.data!);
+  return onValue(res.data!);
 }

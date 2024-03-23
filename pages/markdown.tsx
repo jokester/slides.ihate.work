@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { DefaultMeta } from '../src/components/meta/default-meta';
 import { MarkdownForm, defaultSlideText } from '../src/markdown/markdown-form';
-import { RevealSlideWrapper } from '../src/player/reveal-slide-wrapper';
 import { MarkdownHelp, PageContainer, PageFooter, PageHeader } from '../src/layouts';
 import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
 import { isUrl } from '../src/core/url-loader';
@@ -10,7 +9,6 @@ import { extractErrorMessage } from '../src/utils';
 import debug from 'debug';
 import { useRouter } from 'next/router';
 import { SlideBundle } from '../src/core/SlideBundle';
-import { FramedPortal } from '../src/iframe/framed-portal';
 import { RevealSlidePlayer } from '../src/player/reveal-slide-player';
 
 const logger = debug('pages:markdown');
@@ -57,9 +55,7 @@ export default function MarkdownPage() {
   return (
     <>
       <DefaultMeta title="slides.ihate.work" />
-      <FramedPortal>
-        <RevealSlidePlayer onDestroy={() => setPlayback(null)} bundle={playback} />
-      </FramedPortal>
+      <RevealSlidePlayer listenEscDblclick onDestroy={() => setPlayback(null)} bundle={playback} />
     </>
   );
 }

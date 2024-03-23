@@ -1,10 +1,8 @@
-import { PreJson } from '../src/dummy/pre-json';
 import { ExampleLinks } from '../src/dummy/example-links';
 import * as React from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { FramedPortal } from '../src/iframe/framed-portal';
-
+import { OnlyInBrowser } from '../src/components/OnlyInBrowser';
 /**
  *
  */
@@ -17,19 +15,21 @@ const AboutPage: NextPage<PageProps> = (props) => {
   const query = useRouter().query;
   return (
     <>
-      <ExampleLinks />
       <h2>AboutPage in {__filename}</h2>
-      <PreJson value={props} />
-      <PreJson value={query} />
-      <FramedPortal><div>???</div></FramedPortal>
+      {/*<PreJson value={props} />*/}
+      {/*<PreJson value={query} />*/}
+      <OnlyInBrowser>
+        <ExampleLinks />
+      </OnlyInBrowser>
     </>
   );
 };
 
 export const runtime = 'experimental-edge';
 
-AboutPage.getInitialProps = async (ctx) => ({
-  renderedAt: Date.now(),
+// @ts-ignore
+AboutPage.DISABLED_getInitialProps = async (ctx) => ({
+  renderedAt: 0 && Date.now(),
   renderedBy: ctx.req ? 'server' : 'browser',
 });
 
