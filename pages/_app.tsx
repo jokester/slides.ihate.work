@@ -4,8 +4,10 @@ import '../src/app.scss';
 import { DefaultMeta } from '../src/components/meta/default-meta';
 import { SnackbarProvider } from 'notistack';
 import Head from 'next/head';
+import { useRevealPreload } from '../src/player/use-reveal-preload';
 
 const CustomApp: React.FC<AppProps> & Partial<Pick<typeof App, 'getInitialProps'>> = (props) => {
+  useRevealPreload();
   const { Component, pageProps } = props;
   return (
     <>
