@@ -15,11 +15,11 @@ const MermaidP: PromiseLike<import('mermaid').Mermaid> = lazyThenable(async () =
 });
 
 /**
- * stolen from
+ * stolen from https://github.com/zjffun/reveal.js-mermaid-plugin
  * with maybe smaller bundle size
- * and workaround of next.js hot reload
+ * and workaround for next.js hot reload
  */
-const MermaidPlugin: PluginFunction = () => ({
+const mermaidPlugin: ReturnType<PluginFunction> = {
   id: 'mermaid-in-house',
   init(deck: Reveal.Api) {
     const renderNodes = () =>
@@ -42,7 +42,7 @@ const MermaidPlugin: PluginFunction = () => ({
     deck.on('ready', renderNodes);
     deck.on('slidechanged', renderNodes);
   },
-});
+};
 
 export async function createReveal(elem: HTMLElement, options?: Reveal.Options): Promise<Reveal.Api> {
   // math / mermaid plugin expects this
@@ -55,7 +55,10 @@ export async function createReveal(elem: HTMLElement, options?: Reveal.Options):
     slideNumber: true,
     hash: false,
     center: true,
-    plugins: [RevealMarkdown, RevealHighlight, RevealSearch, KaTeX, MermaidPlugin],
+    plugins: [RevealMarkdown, RevealHighlight, RevealSearch, KaTeX, () => mermaidPlugin],
+    katex: {
+      version: '0.16.9',
+    },
     ...options,
   });
   // f.sync()
