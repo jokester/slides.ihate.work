@@ -1,4 +1,4 @@
-import { cloneElement } from 'react';
+import { cloneElement, memo, ReactElement } from 'react';
 import Head from 'next/head';
 
 export const cssLinks = {
@@ -44,9 +44,15 @@ export type RevealThemeKey = Exclude<keyof typeof revealThemes, 'reset' | 'base'
 export type RevealCodeThemeKey = keyof typeof revealCodeThemes;
 
 export function RevealStylesheets(props: { theme?: RevealThemeKey; codeTheme?: RevealCodeThemeKey }) {
-  const base = cloneElement(revealThemes.base, { key: 'reveal-base' });
-  const revealTheme = cloneElement(revealThemes[props.theme ?? 'simple'], { key: 'reveal-theme' });
-  const codeTheme = cloneElement(revealCodeThemes[props.codeTheme ?? 'docco'], { key: 'reveal-code-theme' });
+  const base = cloneElement(revealThemes.base, { key: 'reveal-base', crossOrigin: 'anonymous' });
+  const revealTheme = cloneElement(revealThemes[props.theme ?? 'simple'], {
+    key: 'reveal-theme',
+    crossOrigin: 'anonymous',
+  });
+  const codeTheme = cloneElement(revealCodeThemes[props.codeTheme ?? 'docco'], {
+    key: 'reveal-code-theme',
+    crossOrigin: 'anonymous',
+  });
   return (
     <Head>
       {base}

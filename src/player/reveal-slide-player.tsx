@@ -13,7 +13,7 @@ const logger = debug('src:markdown:markdown-slides');
 
 export interface MarkdownSlideProps {
   revealTheme?: RevealThemeKey;
-  revealCodeTheme: RevealCodeThemeKey;
+  revealCodeTheme?: RevealCodeThemeKey;
   className?: string;
   bundle?: SlideBundle;
   /**
