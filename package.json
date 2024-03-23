@@ -17,7 +17,7 @@
   },
   "description": "A tool to present reveal.js slides in browser",
   "author": "Wang Guan <momocraft@gmail.com>",
-  "license": "BSD-3-Clause",
+  "license": "Apache-2.0",
   "dependencies": {
     "@cloudflare/next-on-pages": "^1.10.0",
     "@cloudflare/workers-types": "4.20240320.1",
