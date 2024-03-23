@@ -20,6 +20,7 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "@cloudflare/next-on-pages": "^1.10.0",
+    "@cloudflare/workers-types": "4.20240320.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@jokester/ts-commonutil": "^0.5.0",
@@ -31,23 +32,23 @@
     "clsx": "^2.0.0",
     "date-fns": "^3.4.0",
     "debug": "^4.3.4",
+    "foxact": "^0.2.33",
     "fp-ts": "<3",
     "immer": "^10.0.3",
     "lodash-es": "^4.17.21",
+    "mermaid": "^10.9.0",
     "next": "^14",
     "notistack": "^3.0.1",
     "react": "^18.2.0",
-    "vercel": "^33.6",
-    "wrangler": "^3.36.0",
-    "@cloudflare/workers-types": "4.20240320.1",
     "react-dom": "^18.2.0",
     "react-use": "^17.4.2",
     "reveal.js": "^5.0.5",
-    "reveal.js-mermaid-plugin": "^2.0.0",
     "rxjs": "^7.8.1",
     "swr": "^2.2.5",
     "tslib": "^2",
-    "use-constant": "^1.1.1"
+    "use-constant": "^1.1.1",
+    "vercel": "^33.6",
+    "wrangler": "^3.36.0"
   },
   "engines": {
     "node": "^20"

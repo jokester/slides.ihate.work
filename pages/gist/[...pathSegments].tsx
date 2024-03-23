@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { GistSource } from '../../src/core/GistSource';
 import useSWR from 'swr';
-import { RenderSwr } from '../../src/components/RenderSwr';
+import { useRenderSwr } from '../../src/components/RenderSwr';
 import { GistTextarea } from '../../src/gist/gist-textarea';
 import { DefaultMeta } from '../../src/components/meta/default-meta';
 import { PageContainer, PageHeader } from '../../src/layouts';
-import { RevealSlideWrapper } from '../../src/player/reveal-slide-wrapper';
+import { RevealSlidePlayer } from '../../src/player/reveal-slide-player';
 
 const logger = debug('pages:gist');
 
@@ -21,24 +21,24 @@ function GistSourcePageContent({ src }: { src: GistSource }) {
     setPlayback(true);
   };
 
+  const textArea = useRenderSwr(fetched, (v) => (
+    <GistTextarea bundle={v} initialValue={text} onStart={onStartPlayback} />
+  ));
+
   logger(src, fetched);
 
   if (!playback) {
     return (
       <PageContainer>
         <PageHeader />
-        <DefaultMeta title="slides.ihate.work" />
-        <RenderSwr res={fetched}>
-          {(v) => <GistTextarea bundle={v} initialValue={text} onStart={onStartPlayback} />}
-        </RenderSwr>
+        {textArea}
       </PageContainer>
     );
   }
 
   return (
     <>
-      <DefaultMeta title="slides.ihate.work" />
-      <RevealSlideWrapper onDestroy={() => setPlayback(false)} text={text} />
+      <RevealSlidePlayer listenEscDblclick onDestroy={() => setPlayback(false)} text={text} />
     </>
   );
 }

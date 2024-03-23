@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { DefaultMeta } from '../src/components/meta/default-meta';
 import { MarkdownForm, defaultSlideText } from '../src/markdown/markdown-form';
-import { RevealSlideWrapper } from '../src/player/reveal-slide-wrapper';
 import { MarkdownHelp, PageContainer, PageFooter, PageHeader } from '../src/layouts';
 import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
 import { isUrl } from '../src/core/url-loader';
@@ -9,6 +8,8 @@ import { rewriteUrlToRoute } from '../src/routes/url-rewrite';
 import { extractErrorMessage } from '../src/utils';
 import debug from 'debug';
 import { useRouter } from 'next/router';
+import { SlideBundle } from '../src/core/SlideBundle';
+import { RevealSlidePlayer } from '../src/player/reveal-slide-player';
 
 const logger = debug('pages:markdown');
 
@@ -18,7 +19,7 @@ const logger = debug('pages:markdown');
  */
 export default function MarkdownPage() {
   const [text, setText] = useState('');
-  const [playback, setPlayback] = useState(false);
+  const [playback, setPlayback] = useState<null | SlideBundle>(null);
   const onTextChange = (newText: string, isManualEdit: boolean) => {
     if (isManualEdit || !text || text === defaultSlideText) {
       setText(newText);
@@ -28,7 +29,9 @@ export default function MarkdownPage() {
   };
 
   const onStartPlayback = () => {
-    setPlayback(true);
+    setPlayback({
+      slideText: text,
+    });
   };
   useTextInitialize((initialValue) => {
     logger('externalText', initialValue);
@@ -52,7 +55,7 @@ export default function MarkdownPage() {
   return (
     <>
       <DefaultMeta title="slides.ihate.work" />
-      <RevealSlideWrapper onDestroy={() => setPlayback(false)} text={text} />
+      <RevealSlidePlayer listenEscDblclick onDestroy={() => setPlayback(null)} bundle={playback} />
     </>
   );
 }
