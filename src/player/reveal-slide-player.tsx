@@ -1,15 +1,4 @@
-import {
-  PropsWithChildren,
-  Ref,
-  RefObject,
-  forwardRef,
-  memo,
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import { PropsWithChildren, Ref, RefObject, forwardRef, memo, useEffect, useImperativeHandle, useRef } from 'react';
 import { useAsyncEffect } from '@jokester/ts-commonutil/lib/react/hook/use-async-effect';
 import debug from 'debug';
 import { SlideBundle } from '../core/SlideBundle';
@@ -18,10 +7,13 @@ import slideStyles from './slides.module.scss';
 import { useSingleton } from 'foxact/use-singleton';
 import { createKeyUpObservable, createRecentObservable } from '../utils/observables';
 import { closeSnackbar, enqueueSnackbar } from 'notistack';
+import { RevealCodeThemeKey, RevealStylesheets, RevealThemeKey } from '../components/cdn_assets';
 
 const logger = debug('src:markdown:markdown-slides');
 
 export interface MarkdownSlideProps {
+  revealTheme?: RevealThemeKey;
+  revealCodeTheme: RevealCodeThemeKey;
   className?: string;
   bundle?: SlideBundle;
   /**
@@ -114,6 +106,7 @@ function _RevealSlidePlayer(props: PropsWithChildren<MarkdownSlideProps>, ref: R
 
   return (
     <div className={clsx('reveal', props.className, slideStyles.revealPlaying)} ref={divRef}>
+      <RevealStylesheets theme={props.revealTheme ?? 'simple'} codeTheme={props.revealCodeTheme ?? 'docco'} />
       <div className="slides">
         <section data-markdown="" {...options}>
           <script type="text/template">{slideText.current}</script>

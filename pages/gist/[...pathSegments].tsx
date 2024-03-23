@@ -3,11 +3,10 @@ import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { GistSource } from '../../src/core/GistSource';
 import useSWR from 'swr';
-import { useRenderSwr } from '../../src/components/RenderSwr';
 import { GistTextarea } from '../../src/gist/gist-textarea';
-import { DefaultMeta } from '../../src/components/meta/default-meta';
 import { PageContainer, PageHeader } from '../../src/layouts';
 import { RevealSlidePlayer } from '../../src/player/reveal-slide-player';
+import { useRenderSwr } from '../../src/components/useRenderSwr';
 
 const logger = debug('pages:gist');
 

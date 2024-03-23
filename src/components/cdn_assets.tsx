@@ -1,3 +1,6 @@
+import { cloneElement } from 'react';
+import Head from 'next/head';
+
 export const cssLinks = {
   tailwind2: (
     <link
@@ -12,64 +15,19 @@ export const cssLinks = {
 };
 
 export const revealThemes = {
-  reset: (
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.1/dist/reset.css"
-      integrity="sha256-GqjoTJyry/5NlbGYef5IucLF5tVFdMvmebwi7bn+ErY="
-      crossOrigin="anonymous"
-    />
-  ),
-  base: (
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.1/dist/reveal.css"
-      integrity="sha256-kn0GsHm3VJbbHu3LH5BQYg//SYDTkhbrHsseRTZgTz0="
-      crossOrigin="anonymous"
-    />
-  ),
-  white: (
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.1/dist/theme/white.css"
-      integrity="sha256-WqOk5DDwjhWKLU+Yp/xxhPXvNlWUK7U7qGhj/JNqLPA="
-      crossOrigin="anonymous"
-    />
-  ),
-  simple: (
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.1/dist/theme/simple.css"
-      integrity="sha256-BYbhkIKkrDAzklCmlvqhvE11+kJhqINHgrGzQOAEdMg="
-      crossOrigin="anonymous"
-    />
-  ),
-  black: (
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.1/dist/theme/black.css"
-      integrity="sha256-u7b1ew+/UCV5esol+6xydfpMhXWOxKlNzz3+H+UQ6H8="
-      crossOrigin="anonymous"
-    />
-  ),
+  reset: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.5/dist/reset.min.css" />,
+  base: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.5/dist/reveal.min.css" />,
+  white: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.5/dist/theme/white.min.css" />,
+  simple: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.5/dist/theme/simple.min.css" />,
+  black: <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.5/dist/theme/black.min.css" />,
 } as const;
 
 export const revealCodeThemes = {
   monokai: (
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.1/plugin/highlight/monokai.css"
-      integrity="sha256-UE5RMUFE8/gycVXcaVAroQsaSZGuTMP6cAhs8VVGWZk="
-      crossOrigin="anonymous"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.5/plugin/highlight/monokai.min.css" />
   ),
   zenburn: (
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.1/plugin/highlight/zenburn.css"
-      integrity="sha256-uhRpp9AZTJyimq9K0zQf/uW/u1g/IvBiDiXpGpqEZDE="
-      crossOrigin="anonymous"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.0.5/plugin/highlight/zenburn.min.css" />
   ),
 
   docco: (
@@ -81,3 +39,19 @@ export const revealCodeThemes = {
     />
   ),
 } as const;
+
+export type RevealThemeKey = Exclude<keyof typeof revealThemes, 'reset' | 'base'>;
+export type RevealCodeThemeKey = keyof typeof revealCodeThemes;
+
+export function RevealStylesheets(props: { theme?: RevealThemeKey; codeTheme?: RevealCodeThemeKey }) {
+  const base = cloneElement(revealThemes.base, { key: 'reveal-base' });
+  const revealTheme = cloneElement(revealThemes[props.theme ?? 'simple'], { key: 'reveal-theme' });
+  const codeTheme = cloneElement(revealCodeThemes[props.codeTheme ?? 'docco'], { key: 'reveal-code-theme' });
+  return (
+    <Head>
+      {base}
+      {revealTheme}
+      {codeTheme}
+    </Head>
+  );
+}
