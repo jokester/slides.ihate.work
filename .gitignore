@@ -1,13 +1,10 @@
-/node_modules
-/out
-/build
-/*.tgz
+node_modules
 .idea
 *.map
-/coverage
-/.next
-/.vercel
-/.env
+coverage
+.next
+.vercel
+.env
 node_modules
 
 npm-debug.log*
@@ -15,4 +12,4 @@ yarn-debug.log*
 yarn-error.log*
 
 .DS_store
-tsconfig.tsbuildinfo
+*.tsbuildinfo

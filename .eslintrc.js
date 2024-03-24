@@ -41,6 +41,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'no-inner-declarations': 'warn',
     'node/no-extraneous-import': 0,
+    'node/no-unsupported-features/node-builtins': 0,
     'no-useless-escape': 'warn',
     'no-constant-condition': 'warn',
     'no-irregular-whitespace': 'warn',
