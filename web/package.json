@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:pages": "next-on-pages",
     "analyze": "BUNDLE_ANALYZE=both next build",
     "start": "NODE_ENV=production next start",
     "test": "jest",
