@@ -1,0 +1,39 @@
+on:
+  push:
+    branches:
+      - main
+  pull_request: {} # NOTE: worktree would be a temporal merge commit
+  workflow_dispatch: {}
+    # inputs:
+    #   environment:
+    #     description: "Choose an environment to deploy to: <Preview|Production>"
+    #     required: true
+    #     default: "Preview"
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: 'package-lock.json'
+      - run: npm ci
+      - uses: actions/cache@v4
+        with:
+          path: web/.next
+          key: ${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+      - run: npm run --workspace=web build:pages
+      - id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          command: |
+            pages deploy web/.vercel/output/static
+            --project-name=slides-ihate-work-monorepo --branch=${{ github.ref.name }} --commit-hash=${{ github.sha }}
+            --env=${{ (github.ref_name == 'main' && 'Production') || (github.ref_name != 'main' && 'Preview') }}
+      - name: print deployment-url
+        env:
+          DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
+        run: echo $DEPLOYMENT_URL
