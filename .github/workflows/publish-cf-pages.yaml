@@ -29,9 +29,11 @@ jobs:
       - id: deploy
         uses: cloudflare/wrangler-action@v3
         with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          wranglerVersion: '3.36.0' # same as in /package.json
           command: |
-            pages deploy web/.vercel/output/static
-            --project-name=slides-ihate-work-monorepo --branch=${{ github.ref.name }} --commit-hash=${{ github.sha }}
+            pages deploy web/.vercel/output/static \
+            --project-name=slides-ihate-work-monorepo --branch=${{ github.ref.name }} --commit-hash=${{ github.sha }} \
             --env=${{ (github.ref_name == 'main' && 'Production') || (github.ref_name != 'main' && 'Preview') }}
       - name: print deployment-url
         env:
