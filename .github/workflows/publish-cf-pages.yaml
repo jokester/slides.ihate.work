@@ -1,7 +1,7 @@
 on:
-  # push: # not required?
-  #   branches:
-      # - main
+  push:
+    branches:
+      - main
   pull_request: {} # NOTE: worktree would be a temporal merge commit
   workflow_dispatch: {}
     # inputs:
