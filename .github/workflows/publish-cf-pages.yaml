@@ -1,7 +1,7 @@
 on:
-  push:
-    branches:
-      - main
+  # push: # not required?
+  #   branches:
+      # - main
   pull_request: {} # NOTE: worktree would be a temporal merge commit
   workflow_dispatch: {}
     # inputs:
@@ -37,3 +37,23 @@ jobs:
         env:
           DEPLOYMENT_URL: ${{ steps.deploy.outputs.deployment-url }}
         run: echo $DEPLOYMENT_URL
+
+      - uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Deployed to CF pages (Preview) at ${{ steps.deploy.outputs.deployment-url }}
+          comment_tag: execution
+
+      - uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Deployed to CF pages (Preview) at ${{ steps.deploy.outputs.deployment-url }}
+          comment_tag: deploy_preview
+        if: ${{ github.ref_name != 'main' }}
+
+      - uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Deployed to CF pages (Prod) at ${{ steps.deploy.outputs.deployment-url }}
+          comment_tag: deploy_prod
+        if: ${{ github.ref_name == 'main' }}
