@@ -42,12 +42,6 @@ jobs:
         with:
           message: |
             Deployed to CF pages (Preview) at ${{ steps.deploy.outputs.deployment-url }}
-          comment_tag: execution
-
-      - uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: |
-            Deployed to CF pages (Preview) at ${{ steps.deploy.outputs.deployment-url }}
           comment_tag: deploy_preview
         if: ${{ github.ref_name != 'main' }}
 
