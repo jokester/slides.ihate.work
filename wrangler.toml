@@ -1,4 +1,0 @@
-name = "my-next-app"
-
-compatibility_flags = ["nodejs_compat"]
-
