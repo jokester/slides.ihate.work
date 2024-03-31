@@ -30,7 +30,7 @@ function GistSourcePageContent({ src }: { src: GistSource }) {
       {v.gistSource && (
         <div>
           Original Gist:&nbsp;
-          <a className="text-xs underline" href={v.gistSource.asUpstreamUrl()} target="_blank">
+          <a className="text-xs underline" href={v.gistSource.asUpstreamUrl()} target="_blank" rel="noreferrer">
             {v.gistSource.asUpstreamUrl()}
           </a>
         </div>
