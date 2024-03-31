@@ -1,17 +1,15 @@
-import { Button, Input, TextField } from '@mui/material';
+import { Button, IconButton, Input, TextField } from '@mui/material';
 import clsx from 'clsx';
 import { useState } from 'react';
-import { useToggle } from 'react-use';
-import { detectSourceUrlType, isUrl, loadExternalSourceUrl } from '../core/url-loader';
-import { GitHub } from '@mui/icons-material';
+import { detectSourceUrlType, isUrl } from '../core/url-loader';
+import { GitHub, Clear, Http } from '@mui/icons-material';
 
 export function ExternalSourceInput(props: { onSubmit?(url: string): void }) {
   const [urlValue, setUrlValue] = useState('');
-  const [loading, setLoading] = useToggle(false);
-  const detectedType = detectSourceUrlType(urlValue);
+  const urlType = detectSourceUrlType(urlValue);
 
   const onSubmit = () => {
-    if (!isUrl(urlValue)) {
+    if (urlType === 'unknown') {
       alert('Invalid URL');
       return;
     }
@@ -23,7 +21,7 @@ export function ExternalSourceInput(props: { onSubmit?(url: string): void }) {
       <div>
         <TextField
           className={clsx('w-full')}
-          label="URL to load. Currently gist is supported"
+          label="URL of markdown slide text"
           variant="outlined"
           value={urlValue}
           onChange={(ev) => setUrlValue(ev.target.value)}
@@ -31,6 +29,13 @@ export function ExternalSourceInput(props: { onSubmit?(url: string): void }) {
             if (ev.key === 'Enter') {
               onSubmit();
             }
+          }}
+          InputProps={{
+            endAdornment: urlValue && (
+              <IconButton size="small" onClick={() => setUrlValue('')}>
+                <Clear />
+              </IconButton>
+            ),
           }}
         />
       </div>
@@ -41,19 +46,15 @@ export function ExternalSourceInput(props: { onSubmit?(url: string): void }) {
           variant="outlined"
           color="primary"
           onClick={onSubmit}
-          aria-busy={loading}
-          disabled={loading || !urlValue}
+          disabled={!urlValue}
         >
           {
-            loading ? (
-              'Loading...'
-            ) : !detectedType ? (
-              'Load' // but disabled
-            ) : detectedType === 'gist' ? (
+            urlType === 'gist' ? (
               <>
-                Load from Github Gist <GitHub />
+                Load from Gist &nbsp;
+                <GitHub />
               </>
-            ) : detectedType === 'unknown' ? (
+            ) : urlType === 'unknown' ? (
               'Load Raw URL'
             ) : (
               'Load'

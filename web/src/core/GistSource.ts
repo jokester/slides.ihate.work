@@ -3,8 +3,8 @@ import { SlideBundle } from './SlideBundle';
 import { SourceError } from './errors';
 import { InternalUrlProvider } from './internal-url-provider';
 
-interface GistSourceLocator {
-  rawUrl: string;
+export interface GistSourceLocator {
+  rawUrl: URL;
   ownerId: string;
   gistId: string;
   revisionId?: string;
@@ -16,8 +16,6 @@ export function buildGistSource(url: URL): GistSource | null {
   return l && new GistSource(l);
 }
 
-/**
- */
 export function parseGistUrl(u: URL): GistSourceLocator | null {
   const parts = u.pathname.split('/');
   const [_empty, ownerId, gistId, ...rest] = parts;
@@ -28,7 +26,7 @@ export function parseGistUrl(u: URL): GistSourceLocator | null {
     // a raw file like
     // https://gist.githubusercontent.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/raw/4676f49e32f95fd76549ce4f7330f0f7aa4662b3/0-rancher-zerotier-k3s-deployment.md
     return {
-      rawUrl: u.toString(),
+      rawUrl: u,
       ownerId,
       gistId,
       revisionId: rest[1],
@@ -40,7 +38,7 @@ export function parseGistUrl(u: URL): GistSourceLocator | null {
     // a gist like
     // https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8
     return {
-      rawUrl: u.toString(),
+      rawUrl: u,
       ownerId,
       gistId,
       revisionId: rest[0],
@@ -51,7 +49,7 @@ export function parseGistUrl(u: URL): GistSourceLocator | null {
     // a gist revision like:
     // https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/4676f49e32f95fd76549ce4f7330f0f7aa4662b3
     return {
-      rawUrl: u.toString(),
+      rawUrl: u,
       ownerId,
       gistId,
     };
@@ -59,23 +57,35 @@ export function parseGistUrl(u: URL): GistSourceLocator | null {
   return null;
 }
 
-class GistSource implements InternalUrlProvider {
+export class GistSource implements InternalUrlProvider {
+  readonly locator: Readonly<GistSourceLocator>;
   constructor(
-    readonly locator: Readonly<GistSourceLocator>,
+    locator: string | URL | GistSourceLocator,
     private readonly client = new Octokit(),
-  ) {}
+  ) {
+    if (typeof locator === 'string') {
+      this.locator = parseGistUrl(new URL(locator))!;
+    } else if (locator instanceof URL) {
+      this.locator = parseGistUrl(locator)!;
+    } else {
+      this.locator = locator;
+    }
+    if (!this.locator) {
+      throw new Error(`invalid github URL`);
+    }
+  }
 
   get fetchKey(): string {
     return `gistUrl=${this.locator.rawUrl}`;
   }
 
   asInternalPageUrl(): string {
-    const parsed = this.locator;
-    return `/gist/${parsed.ownerId}/${parsed.gistId}`;
+    const { rawUrl } = this.locator;
+    return `/gist${rawUrl.pathname}`;
   }
 
   asUpstreamUrl(): string {
-    return this.locator.rawUrl;
+    return this.locator.rawUrl.toString();
   }
 
   /**

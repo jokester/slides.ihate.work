@@ -1,7 +1,7 @@
 import debug from 'debug';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
-import { GistSource } from '../../src/core/GistSource';
+import { GistSource, GistSourceLocator } from '../../src/core/GistSource';
 import useSWR from 'swr';
 import { GistTextarea } from '../../src/gist/gist-textarea';
 import { PageContainer, PageHeader } from '../../src/layouts';
@@ -54,7 +54,7 @@ export default function GistPresentPage() {
     try {
       const url = new URL(location.href);
       url.pathname = url.pathname.slice('/gist'.length);
-      const src = new GistSource(url.toString());
+      const src = new GistSource(url);
       setSrc(src);
     } catch (e: any) {
       const err = new Error(e?.message || 'error', {
