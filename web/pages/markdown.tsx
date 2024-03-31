@@ -11,7 +11,8 @@ import { useRouter } from 'next/router';
 import { SlideBundle } from '../src/core/SlideBundle';
 import { RevealSlidePlayer } from '../src/player/reveal-slide-player';
 import { Button } from '@mui/material';
-import { MarkdownTextarea, StartPlaybackButton } from '../src/markdown/markdown-textarea';
+import { ClearButton, MarkdownTextarea, StartPlaybackButton } from '../src/markdown/markdown-textarea';
+import clsx from 'clsx';
 
 const logger = debug('pages:markdown');
 
@@ -48,9 +49,12 @@ export default function RemoteMarkdownPage() {
         <DefaultMeta title="Open URL | slides.ihate.work" />
         <PageContainer>
           <PageHeader />
-          <div className="flex justify-center my-4 items-baseline">
+          <div className={clsx('flex justify-center my-4 items-center', { ['space-x-12']: text })}>
             {text ? (
-              <StartPlaybackButton disabled={!text} onClick={onStartPlayback} />
+              <>
+                <StartPlaybackButton disabled={!text} onClick={onStartPlayback} />
+                <ClearButton variant={undefined} onClick={() => setText('')} />
+              </>
             ) : (
               <>
                 Type some markdown text to start , or &nbsp;
