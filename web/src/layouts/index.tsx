@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { Fragment, PropsWithChildren } from 'react';
 
 export function PageContainer(props: PropsWithChildren) {
-  return <div className="container mx-auto min-h-screen flex flex-col">{props.children}</div>;
+  return <div className="container mx-auto min-h-screen flex flex-col px-2 lg:px-0">{props.children}</div>;
 }
 
 export function PageHeader() {
@@ -13,7 +13,7 @@ export function PageHeader() {
           slides.ihate.work
         </Link>
       </h1>
-      <h2 className="text-lg my-1 text-center">A site to present Markdown slides</h2>
+      <h2 className="text-lg my-1 text-center">Present Markdown slides</h2>
       <hr className="my-4" />
     </>
   );

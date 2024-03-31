@@ -5,6 +5,8 @@ import { DefaultMeta } from '../src/components/meta/default-meta';
 import { SnackbarProvider } from 'notistack';
 import Head from 'next/head';
 import { useRevealPreload } from '../src/player/use-reveal-preload';
+import { ThemeProvider } from '@mui/material';
+import { globalTheme } from '../src/layouts/theme';
 
 const CustomApp: React.FC<AppProps> & Partial<Pick<typeof App, 'getInitialProps'>> = (props) => {
   useRevealPreload();
@@ -15,12 +17,14 @@ const CustomApp: React.FC<AppProps> & Partial<Pick<typeof App, 'getInitialProps'
         <meta
           key="meta-viewport"
           name="viewport"
-          content="width=device-width, initial-scale=1,maximum-scale=1.5,minimum-scale=1"
+          content="width=device-width, initial-scale=1,maximum-scale=3,minimum-scale=1"
         />
       </Head>
       <DefaultMeta />
-      <SnackbarProvider />
-      <Component {...pageProps} />
+      <ThemeProvider theme={globalTheme}>
+        <SnackbarProvider />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </>
   );
 };

@@ -1,15 +1,20 @@
-import { Button, IconButton, Input, TextField } from '@mui/material';
+import { Button, ButtonGroup, IconButton, Input, TextField } from '@mui/material';
 import clsx from 'clsx';
 import { useState } from 'react';
 import { detectSourceUrlType, isUrl } from '../core/url-loader';
 import { GitHub, Clear, Http } from '@mui/icons-material';
+
+const demoUrls = {
+  gist1: 'https://gist.github.com/jokester/983bfc399f4d6e5d677774c054250a94',
+  githubRaw1: 'https://raw.githubusercontent.com/jokester/slides.ihate.work/main/README.md',
+} as const;
 
 export function ExternalSourceInput(props: { onSubmit?(url: string): void }) {
   const [urlValue, setUrlValue] = useState('');
   const urlType = detectSourceUrlType(urlValue);
 
   const onSubmit = () => {
-    if (urlType === 'unknown') {
+    if (urlType === 'invalid') {
       alert('Invalid URL');
       return;
     }
@@ -55,12 +60,27 @@ export function ExternalSourceInput(props: { onSubmit?(url: string): void }) {
                 <GitHub />
               </>
             ) : urlType === 'unknown' ? (
-              'Load Raw URL'
+              <>
+                Load from HTTP URL &nbsp;
+                <Http />
+              </>
             ) : (
               'Load'
             ) // fallback
           }
         </Button>
+      </div>
+      <div className="mt-4">
+        Examples:
+        <div className="space-x-1">
+          <Button size="small" type="button" onClick={() => setUrlValue(demoUrls.gist1)}>
+            Gist
+          </Button>
+          /
+          <Button size="small" type="button" onClick={() => setUrlValue(demoUrls.githubRaw1)}>
+            Github Raw
+          </Button>
+        </div>
       </div>
     </div>
   );
