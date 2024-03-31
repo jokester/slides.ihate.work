@@ -7,6 +7,7 @@
   "description": "https://slides.ihate.work",
   "scripts": {
     "wrangler": "wrangler",
+    "dev": "npm run --workspace=web dev",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "engines": {
