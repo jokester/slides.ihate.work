@@ -1,7 +1,6 @@
 import { Octokit } from '@octokit/rest';
 import { SlideBundle } from './SlideBundle';
 import { SourceError } from './errors';
-import { isUrl } from './url-loader';
 import { InternalUrlProvider } from './internal-url-provider';
 
 interface GistSourceLocator {
@@ -9,6 +8,7 @@ interface GistSourceLocator {
   ownerId: string;
   gistId: string;
   revisionId?: string;
+  filename?: string;
 }
 
 export function buildGistSource(url: URL): GistSource | null {
@@ -17,24 +17,45 @@ export function buildGistSource(url: URL): GistSource | null {
 }
 
 /**
- * - https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8
- * => page: gist
- * - https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/4676f49e32f95fd76549ce4f7330f0f7aa4662b3
- * => page: gist revision
- * - https://gist.githubusercontent.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/raw/4676f49e32f95fd76549ce4f7330f0f7aa4662b3/0-rancher-zerotier-k3s-deployment.md
- * => an raw file
  */
 export function parseGistUrl(u: URL): GistSourceLocator | null {
   const parts = u.pathname.split('/');
-  const [_empty, ownerId, gistId, revisionId, ...rest] = parts;
-  if (gistId?.length === 32 && !revisionId) {
+  const [_empty, ownerId, gistId, ...rest] = parts;
+  if (!(ownerId && gistId?.length === 32)) {
+    return null;
+  }
+  if (rest.length === 3 && rest[0] === 'raw') {
+    // a raw file like
+    // https://gist.githubusercontent.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/raw/4676f49e32f95fd76549ce4f7330f0f7aa4662b3/0-rancher-zerotier-k3s-deployment.md
+    return {
+      rawUrl: u.toString(),
+      ownerId,
+      gistId,
+      revisionId: rest[1],
+      filename: rest[2],
+    };
+  }
+
+  if (rest.length === 1) {
+    // a gist like
+    // https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8
+    return {
+      rawUrl: u.toString(),
+      ownerId,
+      gistId,
+      revisionId: rest[0],
+    };
+  }
+
+  if (!rest.length) {
+    // a gist revision like:
+    // https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/4676f49e32f95fd76549ce4f7330f0f7aa4662b3
     return {
       rawUrl: u.toString(),
       ownerId,
       gistId,
     };
   }
-  // TODO: support more patterns
   return null;
 }
 

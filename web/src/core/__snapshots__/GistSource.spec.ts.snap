@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GistSource parseGistUrl should parse gist url: parseGistUrl(https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8) 1`] = `
+{
+  "gistId": "2ae304016d8c25b09a68a9221f6c07c8",
+  "ownerId": "jokester",
+  "rawUrl": "https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8",
+}
+`;
+
+exports[`GistSource parseGistUrl should parse gist url: parseGistUrl(https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/4676f49e32f95fd76549ce4f7330f0f7aa4662b3) 1`] = `
+{
+  "gistId": "2ae304016d8c25b09a68a9221f6c07c8",
+  "ownerId": "jokester",
+  "rawUrl": "https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/4676f49e32f95fd76549ce4f7330f0f7aa4662b3",
+  "revisionId": "4676f49e32f95fd76549ce4f7330f0f7aa4662b3",
+}
+`;
+
+exports[`GistSource parseGistUrl should parse gist url: parseGistUrl(https://gist.githubusercontent.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/raw/4676f49e32f95fd76549ce4f7330f0f7aa4662b3/0-rancher-zerotier-k3s-deployment.md) 1`] = `
+{
+  "filename": "0-rancher-zerotier-k3s-deployment.md",
+  "gistId": "2ae304016d8c25b09a68a9221f6c07c8",
+  "ownerId": "jokester",
+  "rawUrl": "https://gist.githubusercontent.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/raw/4676f49e32f95fd76549ce4f7330f0f7aa4662b3/0-rancher-zerotier-k3s-deployment.md",
+  "revisionId": "4676f49e32f95fd76549ce4f7330f0f7aa4662b3",
+}
+`;
