@@ -38,7 +38,8 @@ function IndexPageContent() {
     <PageContainer>
       <PageHeader />
 
-      <div className="flex-1 shrink-0">
+      <span className="flex-1" />
+      <div className="shrink-0 h-64">
         <TabContext value={activeTab}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
             <TabList onChange={(_ev, newValue) => setActiveTab(newValue)}>
@@ -60,8 +61,9 @@ function IndexPageContent() {
           </TabPanel>
         </TabContext>
       </div>
+      <span className="flex-1" />
+      <span className="flex-1" />
       <Divider className="mt-12 mb-4" />
-      <MarkdownHelp />
       <CreditsFooter />
     </PageContainer>
   );

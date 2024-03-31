@@ -7,3 +7,7 @@ export const globalTheme = createTheme({
     },
   },
 });
+
+export const globalStyles = {
+  linkText: `underline text-blue-500`,
+} as const;
