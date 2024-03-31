@@ -82,6 +82,7 @@ export function MarkdownTextarea(props: {
   value: string;
   onChange(value: string, isManualEdit: boolean): void;
   className?: string;
+  readOnly?: boolean;
 }) {
   return (
     <div className={clsx('max-w-screen-lg mx-auto px-4', props.className)}>
@@ -91,6 +92,7 @@ export function MarkdownTextarea(props: {
         rows={20}
         cols={80}
         value={props.value}
+        readOnly={props.readOnly}
         onChange={(ev) => props.onChange(ev.target.value, true)}
       />
     </div>
