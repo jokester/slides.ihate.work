@@ -1,18 +1,19 @@
 import debug from 'debug';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GistSource } from '../../src/core/GistSource';
 import useSWR from 'swr';
 import { GistTextarea } from '../../src/gist/gist-textarea';
 import { PageContainer, PageHeader } from '../../src/layouts';
 import { RevealSlidePlayer } from '../../src/player/reveal-slide-player';
 import { useRenderSwr } from '../../src/components/useRenderSwr';
+import clsx from 'clsx';
+import { StartPlaybackButton } from '../../src/markdown/markdown-textarea';
 
 const logger = debug('pages:gist');
 
 function GistSourcePageContent({ src }: { src: GistSource }) {
   const fetched = useSWR(src.fetchKey, async () => src.fetchSource());
-  // local modified text
   const [text, setText] = useState('');
   const [playback, setPlayback] = useState(false);
   const onStartPlayback = (newText: string) => {
@@ -21,7 +22,20 @@ function GistSourcePageContent({ src }: { src: GistSource }) {
   };
 
   const textArea = useRenderSwr(fetched, (v) => (
-    <GistTextarea bundle={v} initialValue={text} onStart={onStartPlayback} />
+    <>
+      <div className={clsx('flex justify-center my-4 items-center', { ['space-x-12']: text })}>
+        <StartPlaybackButton onClick={() => onStartPlayback(v.slideText)} />
+      </div>
+      <GistTextarea bundle={v} initialValue={text} onStart={onStartPlayback} />
+      {v.gistSource && (
+        <div>
+          Original Gist:&nbsp;
+          <a className="text-xs underline" href={v.gistSource.asUpstreamUrl()} target="_blank" rel="noreferrer">
+            {v.gistSource.asUpstreamUrl()}
+          </a>
+        </div>
+      )}
+    </>
   ));
 
   logger(src, fetched);
@@ -54,7 +68,7 @@ export default function GistPresentPage() {
     try {
       const url = new URL(location.href);
       url.pathname = url.pathname.slice('/gist'.length);
-      const src = new GistSource(url.toString());
+      const src = new GistSource(url);
       setSrc(src);
     } catch (e: any) {
       const err = new Error(e?.message || 'error', {
@@ -65,11 +79,21 @@ export default function GistPresentPage() {
   }, [router, router.isReady]);
 
   if (!src) {
-    return <div>Loading...</div>;
+    return (
+      <PageContainer>
+        <PageHeader />
+        <div>Loading...</div>
+      </PageContainer>
+    );
   }
 
   if (src instanceof Error) {
-    return <div>Error: {src.message}</div>;
+    return (
+      <PageContainer>
+        <PageHeader />
+        <div>Error: {src.message}</div>
+      </PageContainer>
+    );
   }
 
   return <GistSourcePageContent key={src.fetchKey} src={src} />;

@@ -5,5 +5,6 @@ export interface SlideBundle {
   // markdown text
   slideText: string;
   fetchTextSource?: FetchTextSource;
+  localTextSource?: Blob;
   gistSource?: GistSource;
 }

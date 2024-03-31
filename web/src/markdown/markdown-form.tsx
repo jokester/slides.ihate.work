@@ -1,16 +1,3 @@
-import { PropsWithChildren, useState } from 'react';
-import { MarkdownTextarea } from './markdown-textarea';
-
-interface MarkdownFormProps {
-  value: string;
-
-  onChange(newText: string, isManualEdit: boolean): void;
-
-  onStart(): void;
-
-  className?: string;
-}
-
 export const defaultSlideText = `
 
 ## Section 1
@@ -43,7 +30,3 @@ sequenceDiagram
 
 ## Thanks for listening
     `.trim();
-
-export function MarkdownForm(props: PropsWithChildren<MarkdownFormProps>) {
-  return <MarkdownTextarea value={props.value} onChange={props.onChange} showUploadButton onStart={props.onStart} />;
-}

@@ -1,63 +1,104 @@
 import { Octokit } from '@octokit/rest';
 import { SlideBundle } from './SlideBundle';
 import { SourceError } from './errors';
-import { isUrl } from './url-loader';
+import { InternalUrlProvider } from './internal-url-provider';
 
-interface GistSourceLocator {
+export interface GistSourceLocator {
+  /**
+   * @deprecated don't use this for URL at Gist. This could be a intra-site URL.
+   */
+  rawUrl: URL;
   ownerId: string;
   gistId: string;
   revisionId?: string;
+  filename?: string;
 }
 
-function parseUrl(u: URL): GistSourceLocator | null {
+export function buildGistSource(url: URL): GistSource | null {
+  const l = parseGistUrl(url);
+  return l && new GistSource(l);
+}
+
+export function parseGistUrl(u: URL): GistSourceLocator | null {
   const parts = u.pathname.split('/');
-  const [_empty, ownerId, gistId, revisionId, ...rest] = parts;
-  if (gistId?.length === 32 && !revisionId) {
+  const [_empty, ownerId, gistId, ...rest] = parts;
+  if (!(ownerId && gistId?.length === 32)) {
+    return null;
+  }
+  if (rest.length === 3 && rest[0] === 'raw') {
+    // a raw file like
+    // https://gist.githubusercontent.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/raw/4676f49e32f95fd76549ce4f7330f0f7aa4662b3/0-rancher-zerotier-k3s-deployment.md
     return {
+      rawUrl: u,
+      ownerId,
+      gistId,
+      revisionId: rest[1],
+      filename: rest[2],
+    };
+  }
+
+  if (rest.length === 1) {
+    // a gist like
+    // https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8
+    return {
+      rawUrl: u,
+      ownerId,
+      gistId,
+      revisionId: rest[0],
+    };
+  }
+
+  if (!rest.length) {
+    // a gist revision like:
+    // https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/4676f49e32f95fd76549ce4f7330f0f7aa4662b3
+    return {
+      rawUrl: u,
       ownerId,
       gistId,
     };
   }
-  // TODO: support more patterns
   return null;
 }
 
-export class GistSource {
-  static isGistUrl(url: string): boolean {
-    return isUrl(url) && !!parseUrl(new URL(url));
-  }
-
+export class GistSource implements InternalUrlProvider {
   readonly locator: Readonly<GistSourceLocator>;
-
-  /**
-   * @param gistUrl like:
-   * - https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8
-   * => page: gist
-   * - https://gist.github.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/4676f49e32f95fd76549ce4f7330f0f7aa4662b3
-   * => page: gist revision
-   * - https://gist.githubusercontent.com/jokester/2ae304016d8c25b09a68a9221f6c07c8/raw/4676f49e32f95fd76549ce4f7330f0f7aa4662b3/0-rancher-zerotier-k3s-deployment.md
-   * => an raw file
-   * @param client
-   */
   constructor(
-    readonly gistUrl: string,
+    locator: string | URL | GistSourceLocator,
     private readonly client = new Octokit(),
   ) {
-    this.locator = parseUrl(new URL(gistUrl))!;
+    if (typeof locator === 'string') {
+      this.locator = parseGistUrl(new URL(locator))!;
+    } else if (locator instanceof URL) {
+      this.locator = parseGistUrl(locator)!;
+    } else {
+      this.locator = locator;
+    }
+    if (!this.locator) {
+      throw new Error(`invalid github URL`);
+    }
   }
 
   get fetchKey(): string {
-    return `gistId=${this.gistUrl}`;
+    return `gistUrl=${this.locator.rawUrl}`;
   }
 
-  get pageUrl(): string {
-    const parsed = this.locator;
+  asInternalPageUrl(): string {
+    const { rawUrl } = this.locator;
+    return `/gist${rawUrl.pathname}`;
+  }
 
-    return `https://gist.github.com/${parsed.ownerId}/${parsed.gistId}`;
+  asUpstreamUrl(): string {
+    const { ownerId, gistId, revisionId } = this.locator;
+
+    if (revisionId) {
+      return `https://gist.github.com/${ownerId}/${gistId}/${revisionId}`;
+    } else {
+      return `https://gist.github.com/${ownerId}/${gistId}`;
+    }
   }
 
   /**
-   * @return a asset bundle fetched from github
+   * @return a asset bundle fetched from GitHub
    */
   async fetchSource(): Promise<SlideBundle> {
     const res = await this.client.rest.gists.get({
