@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import { PageContainer, PageHeader } from '../src/layouts';
 
 export default function NotFoundPage() {
   const router = useRouter();
@@ -9,5 +10,10 @@ export default function NotFoundPage() {
     }, 5e3);
     return () => clearTimeout(timer);
   }, [router]);
-  return <div>Page not found. You will be redirected to site root shortly.</div>;
+  return (
+    <PageContainer>
+      <PageHeader />
+      <div>Page not found. You will be redirected to site root shortly.</div>
+    </PageContainer>
+  );
 }

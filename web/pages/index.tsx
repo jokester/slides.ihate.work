@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
-import { MarkdownHelp, PageContainer, PageFooter, PageHeader } from '../src/layouts';
+import { MarkdownHelp, PageContainer, CreditsFooter, PageHeader } from '../src/layouts';
 import { ExternalSourceInput } from '../src/components/external-src-input';
 import debug from 'debug';
 import { rewriteUrlToRoute } from '../src/routes/url-rewrite';
@@ -29,7 +29,6 @@ function IndexPageContent() {
   const openTabContent = (
     <>
       <div className="space-y-1">
-        <h2>Load from URL:</h2>
         <ExternalSourceInput onSubmit={onSourceUrlSubmit} />
       </div>
     </>
@@ -50,7 +49,7 @@ function IndexPageContent() {
           </Box>
           <TabPanel value="0">{openTabContent}</TabPanel>
           <TabPanel value="1">
-            <Link href={'/markdown'}>
+            <Link href={'/local'}>
               <Button variant="outlined">Open file</Button>
             </Link>
           </TabPanel>
@@ -62,11 +61,8 @@ function IndexPageContent() {
         </TabContext>
       </div>
       <Divider className="mt-12 mb-4" />
-      <div className="space-y-1">
-        <h2>Input markdown text or file: &nbsp;</h2>
-      </div>
       <MarkdownHelp />
-      <PageFooter />
+      <CreditsFooter />
     </PageContainer>
   );
 }
