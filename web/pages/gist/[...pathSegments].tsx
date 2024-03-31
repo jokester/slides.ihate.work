@@ -14,7 +14,6 @@ const logger = debug('pages:gist');
 
 function GistSourcePageContent({ src }: { src: GistSource }) {
   const fetched = useSWR(src.fetchKey, async () => src.fetchSource());
-  // local modified text
   const [text, setText] = useState('');
   const [playback, setPlayback] = useState(false);
   const onStartPlayback = (newText: string) => {
@@ -28,6 +27,14 @@ function GistSourcePageContent({ src }: { src: GistSource }) {
         <StartPlaybackButton onClick={() => onStartPlayback(v.slideText)} />
       </div>
       <GistTextarea bundle={v} initialValue={text} onStart={onStartPlayback} />
+      {v.gistSource && (
+        <div>
+          Original Gist:&nbsp;
+          <a className="text-xs underline" href={v.gistSource.asUpstreamUrl()} target="_blank">
+            {v.gistSource.asUpstreamUrl()}
+          </a>
+        </div>
+      )}
     </>
   ));
 

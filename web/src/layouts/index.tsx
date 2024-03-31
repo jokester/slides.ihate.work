@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { Fragment, PropsWithChildren } from 'react';
-import { Help, Info, PresentToAll } from '@mui/icons-material';
+import { Help, Info, PresentToAll, GitHub } from '@mui/icons-material';
 import { Button } from '@mui/material';
 
 export function PageContainer(props: PropsWithChildren) {
@@ -31,6 +31,11 @@ export function PageHeader() {
           <Button size="small">
             <Info />
             About
+          </Button>
+        </Link>
+        <Link href="https://github.com/jokester/slides.ihate.work">
+          <Button size="small">
+            <GitHub />
           </Button>
         </Link>
       </div>

@@ -4,6 +4,9 @@ import { SourceError } from './errors';
 import { InternalUrlProvider } from './internal-url-provider';
 
 export interface GistSourceLocator {
+  /**
+   * @deprecated don't use this for URL at Gist. This could be a intra-site URL.
+   */
   rawUrl: URL;
   ownerId: string;
   gistId: string;
@@ -85,7 +88,13 @@ export class GistSource implements InternalUrlProvider {
   }
 
   asUpstreamUrl(): string {
-    return this.locator.rawUrl.toString();
+    const { ownerId, gistId, revisionId } = this.locator;
+
+    if (revisionId) {
+      return `https://gist.github.com/${ownerId}/${gistId}/${revisionId}`;
+    } else {
+      return `https://gist.github.com/${ownerId}/${gistId}`;
+    }
   }
 
   /**
