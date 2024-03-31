@@ -72,11 +72,21 @@ export default function GistPresentPage() {
   }, [router, router.isReady]);
 
   if (!src) {
-    return <div>Loading...</div>;
+    return (
+      <PageContainer>
+        <PageHeader />
+        <div>Loading...</div>
+      </PageContainer>
+    );
   }
 
   if (src instanceof Error) {
-    return <div>Error: {src.message}</div>;
+    return (
+      <PageContainer>
+        <PageHeader />
+        <div>Error: {src.message}</div>
+      </PageContainer>
+    );
   }
 
   return <GistSourcePageContent key={src.fetchKey} src={src} />;
