@@ -20,7 +20,10 @@ function UsefulTools() {
         <li>
           vscode-reveal, to preview Markdown slides in VSCode:&nbsp;
           <br />
-          <a className={globalStyles.linkText} href="">
+          <a
+            className={globalStyles.linkText}
+            href="https://marketplace.visualstudio.com/items?itemName=evilz.vscode-reveal"
+          >
             VSCode Marketplace
           </a>
           {' / '}
@@ -38,7 +41,9 @@ function UsefulTools() {
             VSCode Marketplace
           </a>
           {' / '}
-          <a className={globalStyles.linkText} href="https://github.com/lostintangent/gistpad"></a>
+          <a className={globalStyles.linkText} href="https://github.com/lostintangent/gistpad">
+            gh/lostintangent/gistpad
+          </a>
         </li>
       </ul>
     </div>
