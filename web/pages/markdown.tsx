@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import { SlideBundle } from '../src/core/SlideBundle';
 import { RevealSlidePlayer } from '../src/player/reveal-slide-player';
 import { Button } from '@mui/material';
-import { ClearButton, MarkdownTextarea, StartPlaybackButton } from '../src/markdown/markdown-textarea';
+import { ClearButton, MarkdownTextarea, OpenFileButton, StartPlaybackButton } from '../src/markdown/markdown-textarea';
 import clsx from 'clsx';
 
 const logger = debug('pages:markdown');
@@ -46,7 +46,7 @@ export default function RemoteMarkdownPage() {
   if (!playback) {
     return (
       <>
-        <DefaultMeta title="Open URL | slides.ihate.work" />
+        <DefaultMeta title="slides.ihate.work" />
         <PageContainer>
           <PageHeader />
           <div className={clsx('flex justify-center my-4 items-center', { ['space-x-12']: text })}>
@@ -57,7 +57,9 @@ export default function RemoteMarkdownPage() {
               </>
             ) : (
               <>
-                Type some markdown text to start , or &nbsp;
+                Type some markdown text to start or &nbsp;
+                <OpenFileButton onInput={(v) => setText(v.slideText)} />
+                &nbsp; or &nbsp;
                 <Button variant="outlined" onClick={() => setText(defaultSlideText)}>
                   Load example slides
                 </Button>
@@ -80,7 +82,7 @@ export default function RemoteMarkdownPage() {
 /**
  * handle `?markdownUrl=...` query
  */
-export function useTextInitialize(onRawFetched: (x: string) => void) {
+function useTextInitialize(onRawFetched: (x: string) => void) {
   const router = useRouter();
   useAsyncEffect(
     async (running) => {

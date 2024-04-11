@@ -50,8 +50,8 @@ function IndexPageContent() {
           </Box>
           <TabPanel value="0">{openTabContent}</TabPanel>
           <TabPanel value="1">
-            <Link href={'/local'}>
-              <Button variant="outlined">Open file</Button>
+            <Link href={'/markdown'}>
+              <Button variant="outlined">Open local file</Button>
             </Link>
           </TabPanel>
           <TabPanel value="2">
