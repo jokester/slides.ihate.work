@@ -16,7 +16,6 @@ npm run dev
 /                       site root
 /gist/owner/gist        for gist URLs
 /markdown               for inline markdown or unknown external URL
-/local                  for local file
 /about                  about
 /github/owner/repo/...  TODO: for github repo URLs
 /_player                TODO: a remote-controllable player, with content and progress sync

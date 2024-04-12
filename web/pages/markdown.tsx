@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { DefaultMeta } from '../src/components/meta/default-meta';
 import { defaultSlideText } from '../src/markdown/markdown-form';
 import { PageContainer, PageHeader } from '../src/layouts';
@@ -11,7 +11,7 @@ import { useRouter } from 'next/router';
 import { SlideBundle } from '../src/core/SlideBundle';
 import { RevealSlidePlayer } from '../src/player/reveal-slide-player';
 import { Button } from '@mui/material';
-import { ClearButton, MarkdownTextarea, StartPlaybackButton } from '../src/markdown/markdown-textarea';
+import { ClearButton, MarkdownTextarea, OpenFileButton, StartPlaybackButton } from '../src/markdown/markdown-textarea';
 import clsx from 'clsx';
 
 const logger = debug('pages:markdown');
@@ -32,21 +32,27 @@ export default function RemoteMarkdownPage() {
       setText(newText);
     }
   };
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const onStartPlayback = () => {
     setPlayback({
       slideText: text,
     });
   };
-  useTextInitialize((initialValue) => {
-    logger('externalText', initialValue);
-    setText(initialValue);
+  useTextInitialize({
+    onFetchedSrc(initialValue) {
+      logger('externalText', initialValue);
+      setText(initialValue);
+    },
+    onLoadExample() {
+      setText(defaultSlideText);
+    },
   });
 
   if (!playback) {
     return (
       <>
-        <DefaultMeta title="Open URL | slides.ihate.work" />
+        <DefaultMeta title="slides.ihate.work" />
         <PageContainer>
           <PageHeader />
           <div className={clsx('flex justify-center my-4 items-center', { ['space-x-12']: text })}>
@@ -57,7 +63,9 @@ export default function RemoteMarkdownPage() {
               </>
             ) : (
               <>
-                Type some markdown text to start , or &nbsp;
+                Type some markdown text to start or &nbsp;
+                <OpenFileButton inputRef={fileInputRef} onInput={(v) => setText(v.slideText)} />
+                &nbsp; or &nbsp;
                 <Button variant="outlined" onClick={() => setText(defaultSlideText)}>
                   Load example slides
                 </Button>
@@ -80,7 +88,7 @@ export default function RemoteMarkdownPage() {
 /**
  * handle `?markdownUrl=...` query
  */
-export function useTextInitialize(onRawFetched: (x: string) => void) {
+function useTextInitialize(callbacks: { onFetchedSrc(text: string): void; onLoadExample(): void }) {
   const router = useRouter();
   useAsyncEffect(
     async (running) => {
@@ -89,30 +97,27 @@ export function useTextInitialize(onRawFetched: (x: string) => void) {
         return;
       }
       const markdownUrl = router.query.markdownUrl as string | undefined;
-      if (!markdownUrl) {
-        return;
-      }
-      if (!isUrl(markdownUrl)) {
-        alert('Invalid URL');
-        return;
-      }
-      const redirect = rewriteUrlToRoute(markdownUrl);
-      if (redirect instanceof Error) {
-        alert(redirect.message);
-        return;
-      }
-      if (redirect) {
-        router.push(redirect);
-        return;
-      }
-      try {
-        const externalAsset = await fetch(markdownUrl).then((res) => res.text());
-        if (running.current) {
-          onRawFetched(externalAsset);
+      if (isUrl(markdownUrl)) {
+        const redirect = rewriteUrlToRoute(markdownUrl);
+        if (redirect instanceof Error) {
+          alert(redirect.message);
+          return;
         }
-      } catch (e: unknown) {
-        console.error(e);
-        alert(extractErrorMessage(e));
+        if (redirect) {
+          router.push(redirect);
+          return;
+        }
+        try {
+          const externalAsset = await fetch(markdownUrl).then((res) => res.text());
+          if (running.current) {
+            callbacks.onFetchedSrc(externalAsset);
+          }
+        } catch (e: unknown) {
+          console.error(e);
+          alert(extractErrorMessage(e));
+        }
+      } else if (markdownUrl === 'example') {
+        callbacks.onLoadExample();
       }
     },
     [router],

@@ -50,13 +50,17 @@ function IndexPageContent() {
           </Box>
           <TabPanel value="0">{openTabContent}</TabPanel>
           <TabPanel value="1">
-            <Link href={'/local'}>
-              <Button variant="outlined">Open file</Button>
+            <Link href={'/markdown'}>
+              <Button variant="outlined">Open local file</Button>
             </Link>
           </TabPanel>
-          <TabPanel value="2">
+          <TabPanel value="2" className="space-x-2">
             <Link href={'/markdown'}>
               <Button variant="outlined">Input Text</Button>
+            </Link>
+            &nbsp; or
+            <Link href={'/markdown?markdownUrl=example'}>
+              <Button variant="outlined">Load Example Text</Button>
             </Link>
           </TabPanel>
         </TabContext>

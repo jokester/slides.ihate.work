@@ -90,15 +90,11 @@ function _RevealSlidePlayer(props: PropsWithChildren<MarkdownSlideProps>, ref: R
   useImperativeHandle(ref, () => handle, []);
   useDoubleClickEsc(props);
 
-  useAsyncEffect(
-    async (running, released) => {
-      await handle.init();
-      await released;
-      await handle.destroy();
-    },
-    [],
-    true,
-  );
+  useAsyncEffect(async (running, released) => {
+    await handle.init();
+    await released;
+    await handle.destroy();
+  }, []);
   const options = {
     'data-separator': '^\n---\n$',
     'data-separator-vertical': '^\n--\n$',
