@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { Button } from '@mui/material';
 import { FileOpen, PlayCircle, Clear } from '@mui/icons-material';
-import { ChangeEvent, RefObject, useState } from 'react';
+import { ChangeEvent, MutableRefObject, RefObject, useState } from 'react';
 import { SlideBundle } from '../core/SlideBundle';
 import { PropsOf } from '@emotion/react';
 
@@ -47,7 +47,11 @@ export function useSlideFileInput(inputRef?: RefObject<HTMLInputElement>) {
   } as const;
 }
 
-export function OpenFileButton(props: { className?: string; onInput?(value: SlideBundle): void }) {
+export function OpenFileButton(props: {
+  className?: string;
+  onInput?(value: SlideBundle): void;
+  inputRef?: RefObject<HTMLInputElement>;
+}) {
   const handler = useSlideFileInput();
 
   const onFileChange = (ev: ChangeEvent<HTMLInputElement>) => {
@@ -57,7 +61,7 @@ export function OpenFileButton(props: { className?: string; onInput?(value: Slid
   return (
     <Button component="label" variant="outlined" startIcon={<FileOpen />}>
       Open file
-      <input className="hidden" type="file" onChange={onFileChange} accept=".md,.markdown,.txt,text/*" />
+      <input className="hidden" type="file" ref={props.inputRef} onChange={onFileChange} accept=".md,.markdown,.txt,text/*" />
     </Button>
   );
 }

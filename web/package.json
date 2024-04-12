@@ -22,7 +22,7 @@
     "@cloudflare/workers-types": "4.20240320.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@jokester/ts-commonutil": "^0.5.0",
+    "@jokester/ts-commonutil": "^0.6.0",
     "@mui/icons-material": "^5.15.0",
     "@mui/lab": "^5.0.0-alpha.169",
     "@mui/material": "^5.15.0",
