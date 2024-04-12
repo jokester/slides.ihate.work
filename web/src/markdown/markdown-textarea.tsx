@@ -61,7 +61,13 @@ export function OpenFileButton(props: {
   return (
     <Button component="label" variant="outlined" startIcon={<FileOpen />}>
       Open file
-      <input className="hidden" type="file" ref={props.inputRef} onChange={onFileChange} accept=".md,.markdown,.txt,text/*" />
+      <input
+        className="hidden"
+        type="file"
+        ref={props.inputRef}
+        onChange={onFileChange}
+        accept=".md,.markdown,.txt,text/*"
+      />
     </Button>
   );
 }
