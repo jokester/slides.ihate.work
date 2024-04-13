@@ -95,21 +95,28 @@ function _RevealSlidePlayer(props: PropsWithChildren<MarkdownSlideProps>, ref: R
     await released;
     await handle.destroy();
   }, []);
+
+  return (
+    <div className={clsx('reveal', props.className, slideStyles.revealPlaying)} ref={divRef}>
+      <RevealStylesheets theme={props.revealTheme ?? 'simple'} codeTheme={props.revealCodeTheme ?? 'docco'} />
+      <SlideSource slideText={slideText.current} />
+    </div>
+  );
+}
+
+export const RevealSlidePlayer = memo(forwardRef(_RevealSlidePlayer), (whatever) => true);
+
+export function SlideSource(props: { slideText: string }) {
   const options = {
     'data-separator': '^\n---\n$',
     'data-separator-vertical': '^\n--\n$',
   };
 
   return (
-    <div className={clsx('reveal', props.className, slideStyles.revealPlaying)} ref={divRef}>
-      <RevealStylesheets theme={props.revealTheme ?? 'simple'} codeTheme={props.revealCodeTheme ?? 'docco'} />
-      <div className="slides">
-        <section data-markdown="" {...options}>
-          <script type="text/template">{slideText.current}</script>
-        </section>
-      </div>
+    <div className="slides">
+      <section data-markdown="" {...options}>
+        <script type="text/template">{props.slideText}</script>
+      </section>
     </div>
   );
 }
-
-export const RevealSlidePlayer = memo(forwardRef(_RevealSlidePlayer), (whatever) => true);

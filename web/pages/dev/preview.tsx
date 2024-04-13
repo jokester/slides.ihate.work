@@ -9,6 +9,7 @@ export default function DevPreviewPage() {
 
   return (
     <div>
+      <h1>Preview</h1>
       <RevealSlidePreview src={src} />
     </div>
   );
